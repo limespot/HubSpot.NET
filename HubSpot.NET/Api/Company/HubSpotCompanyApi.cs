@@ -1,13 +1,14 @@
-using System;
-using System.Linq;
-using Flurl;
-using HubSpot.NET.Api.Company.Dto;
-using HubSpot.NET.Core;
-using HubSpot.NET.Core.Interfaces;
-using RestSharp;
-
 namespace HubSpot.NET.Api.Company
 {
+    using System;
+    using System.Linq;
+    using System.Net;
+    using Flurl;
+    using HubSpot.NET.Api.Company.Dto;
+    using HubSpot.NET.Core;
+    using HubSpot.NET.Core.Interfaces;
+    using RestSharp;
+
     public class HubSpotCompanyApi : IHubSpotCompanyApi
     {
         private readonly IHubSpotClient _client;
@@ -36,12 +37,21 @@ namespace HubSpot.NET.Api.Company
         /// </summary>
         /// <typeparam name="T">Implementation of CompanyHubSpotModel</typeparam>
         /// <param name="companyId">The ID</param>
-        /// <returns>The company entity</returns>
+        /// <returns>The company entity or null if the company does not exist</returns>
         public T GetById<T>(long companyId) where T : CompanyHubSpotModel, new()
         {
             var path =  $"{new T().RouteBasePath}/companies/{companyId}";
 
-            return _client.Execute<T>(path, Method.GET);
+            try
+            {
+                return _client.Execute<T>(path, Method.GET);
+             }
+            catch (HubSpotException exception)
+            {
+                if (exception.ReturnedError.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                throw;
+            }
         }
 
         /// <summary>
@@ -50,7 +60,7 @@ namespace HubSpot.NET.Api.Company
         /// <typeparam name="T">Implementation of CompanyHubSpotModel</typeparam>
         /// <param name="domain">Domain name to search for</param>
         /// <param name="options">Set of search options</param>
-        /// <returns>The company entity</returns>
+        /// <returns>The company entity or null if the company does not exist</returns>
         public CompanySearchResultModel<T> GetByDomain<T>(string domain, CompanySearchByDomain options = null) where T : CompanyHubSpotModel, new()
         {
             if (options == null)
@@ -60,9 +70,19 @@ namespace HubSpot.NET.Api.Company
 
             var path =  $"{new CompanyHubSpotModel().RouteBasePath}/domains/{domain}/companies";
 
-            var data = _client.ExecuteList<CompanySearchResultModel<T>>(path, options, Method.POST);
+            try
+            {
 
-            return data;
+                var data = _client.ExecuteList<CompanySearchResultModel<T>>(path, options, Method.POST);
+
+                return data;
+             }
+            catch (HubSpotException exception)
+            {
+                if (exception.ReturnedError.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                throw;
+            }
         }
 
         public CompanyListHubSpotModel<T> List<T>(ListRequestOptions opts = null) where T: CompanyHubSpotModel, new()

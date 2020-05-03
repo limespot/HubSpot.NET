@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Flurl;
-using HubSpot.NET.Api.Deal.Dto;
-using HubSpot.NET.Core;
-using HubSpot.NET.Core.Interfaces;
-using RestSharp;
-
-namespace HubSpot.NET.Api.Deal
+﻿namespace HubSpot.NET.Api.Deal
 {
+    using System;
+    using System.Linq;
+    using System.Net;
+    using Flurl;
+    using HubSpot.NET.Api.Deal.Dto;
+    using HubSpot.NET.Core;
+    using HubSpot.NET.Core.Interfaces;
+    using RestSharp;
+
     public class HubSpotDealApi : IHubSpotDealApi
     {
         private readonly IHubSpotClient _client;
@@ -36,12 +36,22 @@ namespace HubSpot.NET.Api.Deal
         /// </summary>
         /// <param name="dealId">ID of the deal</param>
         /// <typeparam name="T">Implementation of DealHubSpotModel</typeparam>
-        /// <returns>The deal entity</returns>
+        /// <returns>The deal entity or null if the deal does not exist</returns>
         public T GetById<T>(long dealId) where T : DealHubSpotModel, new()
         {
             var path = $"{new T().RouteBasePath}/deal/{dealId}";
-            var data = _client.Execute<T>(path, Method.GET);
-            return data;
+
+            try
+            {
+                var data = _client.Execute<T>(path, Method.GET);
+                return data;
+            }
+            catch (HubSpotException exception)
+            {
+                if (exception.ReturnedError.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                throw;
+            }
         }
 
         /// <summary>

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Flurl;
-using HubSpot.NET.Api.Deal.Dto;
-using HubSpot.NET.Api.EmailSubscriptions.Dto;
-using HubSpot.NET.Core;
-using HubSpot.NET.Core.Interfaces;
-using RestSharp;
-
-namespace HubSpot.NET.Api.EmailSubscriptions
+﻿namespace HubSpot.NET.Api.EmailSubscriptions
 {
+    using System.Collections.Generic;
+    using HubSpot.NET.Api.EmailSubscriptions.Dto;
+    using HubSpot.NET.Core.Interfaces;
+    using RestSharp;
+
     public class HubSpotEmailSubscriptionsApi : IHubSpotEmailSubscriptionsApi
     {
         private readonly IHubSpotClient _client;

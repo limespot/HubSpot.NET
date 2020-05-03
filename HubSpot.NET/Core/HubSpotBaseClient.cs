@@ -71,7 +71,7 @@ namespace HubSpot.NET.Core
 
             if (!response.IsSuccessful())
             {
-                throw new HubSpotException("Error from HubSpot");
+                throw new HubSpotException("Error from HubSpot", new HubSpotError(response.StatusCode, response.StatusDescription));
             }
 
             return responseData;
@@ -118,7 +118,7 @@ namespace HubSpot.NET.Core
 
             if (!response.IsSuccessful())
             {
-                throw new HubSpotException("Error from HubSpot", responseData);
+                throw new HubSpotException("Error from HubSpot", new HubSpotError(response.StatusCode, response.StatusDescription), responseData);
             }
 
             return responseData;

@@ -1,11 +1,13 @@
-﻿using System;
-using Flurl;
-using HubSpot.NET.Api.Engagement.Dto;
-using HubSpot.NET.Core.Interfaces;
-using RestSharp;
-
-namespace HubSpot.NET.Api.Engagement
+﻿namespace HubSpot.NET.Api.Engagement
 {
+    using System;
+    using System.Net;
+    using Flurl;
+    using HubSpot.NET.Api.Engagement.Dto;
+	using HubSpot.NET.Core;
+	using HubSpot.NET.Core.Interfaces;
+    using RestSharp;
+
     public class HubSpotEngagementApi : IHubSpotEngagementApi
     {
         private readonly IHubSpotClient _client;
@@ -47,13 +49,22 @@ namespace HubSpot.NET.Api.Engagement
         /// Gets a given engagement (by ID)
         /// </summary>
         /// <param name="engagementId">The ID of the engagement</param>
-        /// <returns>The engagement</returns>
+        /// <returns>The engagement or null if the engagement does not exist</returns>
         public EngagementHubSpotModel GetById(long engagementId)
         {
             var path = $"{new EngagementHubSpotModel().RouteBasePath}/engagements/{engagementId}";
 
-            var data = _client.Execute<EngagementHubSpotModel>(path, Method.GET, false);
-            return data;
+            try
+            {
+                var data = _client.Execute<EngagementHubSpotModel>(path, Method.GET, false);
+                return data;
+            }
+            catch (HubSpotException exception)
+            {
+                if (exception.ReturnedError.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                throw;
+            }
         }
 
         /// <summary>

@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Flurl;
-using HubSpot.NET.Api.Contact.Dto;
-using HubSpot.NET.Core;
-using HubSpot.NET.Core.Interfaces;
-using RestSharp;
-
-namespace HubSpot.NET.Api.Contact
+﻿namespace HubSpot.NET.Api.Contact
 {
-    public class HubSpotContactApi : IHubSpotContactApi
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using Flurl;
+    using HubSpot.NET.Api.Contact.Dto;
+    using HubSpot.NET.Core;
+    using HubSpot.NET.Core.Interfaces;
+    using RestSharp;
+
+   public class HubSpotContactApi : IHubSpotContactApi
     {
         private readonly IHubSpotClient _client;
 
@@ -48,38 +49,68 @@ namespace HubSpot.NET.Api.Contact
         /// </summary>
         /// <param name="contactId">ID of the contact</param>
         /// <typeparam name="T">Implementation of ContactHubSpotModel</typeparam>
-        /// <returns>The contact entity</returns>
+        /// <returns>The contact entity or null if the contact does not exist</returns>
         public T GetById<T>(long contactId) where T : ContactHubSpotModel, new()
         {
             var path = $"{new T().RouteBasePath}/contact/vid/{contactId}/profile";
-            var data = _client.Execute<T>(path, Method.GET);
-            return data;
-        }
+
+            try
+            {
+                var data = _client.Execute<T>(path, Method.GET);
+                return data;
+             }
+            catch (HubSpotException exception)
+            {
+                if (exception.ReturnedError.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                throw;
+            }
+       }
 
         /// <summary>
         /// Gets a contact by their email address
         /// </summary>
         /// <param name="email">Email address to search for</param>
         /// <typeparam name="T">Implementation of ContactHubSpotModel</typeparam>
-        /// <returns>The contact entity</returns>
+        /// <returns>The contact entity or null if the contact does not exist</returns>
         public T GetByEmail<T>(string email) where T : ContactHubSpotModel, new()
         {
             var path =  $"{new T().RouteBasePath}/contact/email/{email}/profile";
-            var data = _client.Execute<T>(path, Method.GET);
-            return data;
-        }
-        
+
+            try
+            {
+                var data = _client.Execute<T>(path, Method.GET);
+                return data;
+             }
+            catch (HubSpotException exception)
+            {
+                if (exception.ReturnedError.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                throw;
+            }
+       }
+
         /// <summary>
         /// Gets a contact by their user token
         /// </summary>
         /// <param name="userToken">User token to search for from hubspotutk cookie</param>
         /// <typeparam name="T">Implementation of ContactHubSpotModel</typeparam>
-        /// <returns>The contact entity</returns>
+        /// <returns>The contact entity or null if the contact does not exist</returns>
         public T GetByUserToken<T>(string userToken) where T : ContactHubSpotModel, new()
         {
             var path = $"{new T().RouteBasePath}/contact/utk/{userToken}/profile";
-            var data = _client.Execute<T>(path, Method.GET);
-            return data;
+
+            try
+            {
+                var data = _client.Execute<T>(path, Method.GET);
+                return data;
+            }
+            catch (HubSpotException exception)
+            {
+                if (exception.ReturnedError.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+                throw;
+            }
         }
 
         /// <summary>

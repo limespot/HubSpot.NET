@@ -1,9 +1,9 @@
-using HubSpot.NET.Api.Properties.Dto;
-using HubSpot.NET.Core.Interfaces;
-using RestSharp;
-
 namespace HubSpot.NET.Api.Properties
 {
+    using HubSpot.NET.Api.Properties.Dto;
+    using HubSpot.NET.Core.Interfaces;
+    using RestSharp;
+
     public class HubSpotCompaniesPropertiesApi : IHubSpotCompanyPropertiesApi
     {
         private readonly IHubSpotClient _client;
