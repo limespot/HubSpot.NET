@@ -22,7 +22,7 @@ namespace HubSpot.NET.Core.Requests
 
             mapped.Properties = new List<HubspotDataEntityProp>();
 
-            var allProps = entity.GetType().GetProperties();
+            var allProps = entity.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var prop in allProps)
             {
@@ -174,7 +174,7 @@ namespace HubSpot.NET.Core.Requests
         internal object ConvertSingleEntity(ExpandoObject dynamicObject, object dto)
         {
             var expandoDict = (IDictionary<string, object>)dynamicObject;
-            var dtoProps = dto.GetType().GetProperties();
+            var dtoProps = dto.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 
             // The vid is the "id" of the entity
             if (expandoDict.TryGetValue("vid", out var vidData))
