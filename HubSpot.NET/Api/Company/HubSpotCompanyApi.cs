@@ -104,7 +104,7 @@ namespace HubSpot.NET.Api.Company
                 path = path.SetQueryParam("offset", opts.Offset);
             }
 
-            var data = _client.ExecuteList<CompanyListHubSpotModel<T>>(path, opts);
+            var data = _client.ExecuteList<CompanyListHubSpotModel<T>>(path);
 
             return data;
         }
@@ -139,6 +139,19 @@ namespace HubSpot.NET.Api.Company
 
             _client.Execute(path, method: Method.DELETE);
         }
-               
+
+        public CompanySearchHubSpotModel<T> Search<T>(Dto.CompanySearchRequestOptions opts = null) where T : CompanyHubSpotModel, new()
+        {
+            if (opts == null)
+            {
+                opts = new Dto.CompanySearchRequestOptions();
+            }
+
+            var path = "/crm/v3/objects/companies/search";
+
+            var data = _client.ExecuteList<CompanySearchHubSpotModel<T>>(path, opts, Method.POST);
+
+            return data;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Runtime.Serialization;
 using HubSpot.NET.Core.Interfaces;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;

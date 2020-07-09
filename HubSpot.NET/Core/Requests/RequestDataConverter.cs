@@ -210,7 +210,17 @@ namespace HubSpot.NET.Core.Requests
                 // prop.Value contains the data returned by HubSpot, which is also an object 
                 // in there we need to go get the "value" prop to get the actual value
 
-                if (!((IDictionary<string, Object>)dynamicProp.Value).TryGetValue("value", out object dynamicValue))
+                IDictionary<string, Object> dynamicPropValue = dynamicProp.Value as IDictionary<string, Object>;
+                object dynamicValue;
+                if (dynamicPropValue == null)
+                {
+                    dynamicValue = dynamicPropValue;
+                    if (dynamicValue == null)
+                    {
+                        continue;
+                    }
+                }
+                else if (!dynamicPropValue.TryGetValue("value", out dynamicValue))
                 {
                     continue;
                 }

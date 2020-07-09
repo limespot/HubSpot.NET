@@ -3,17 +3,17 @@
   <PropertyGroup>
     <TargetFrameworks>net46;net451</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.5.1</Version>
+    <Version>0.6.18.1</Version>
     <Authors>Squared Up Ltd.</Authors>
     <Company>Squared Up Ltd.</Company>
     <Description>C# .NET Wrapper around the common HubSpot APIs.</Description>
     <Copyright>2018 Squared Up Ltd.</Copyright>
-    <PackageLicenseUrl>https://github.com/squaredup/HubSpot.NET/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/squaredup/HubSpot.NET</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/squaredup/HubSpot.NET</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</RepositoryUrl>
     <PackageTags>hubspot api wrapper c# contact company deal engagement properties crm</PackageTags>
-    <PackageReleaseNotes>0.5.1</PackageReleaseNotes>
-    <PackageId>SquaredUp.HubSpot.NET</PackageId>
+    <PackageReleaseNotes>0.6.18</PackageReleaseNotes>
+    <PackageId>_SquaredUp.HubSpot.NET</PackageId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <LangVersion>7.1</LangVersion>

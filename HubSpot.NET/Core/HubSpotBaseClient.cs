@@ -23,7 +23,7 @@ namespace HubSpot.NET.Core
 
         public T Execute<T>(string absoluteUriPath, object entity = null, Method method = Method.GET, bool convertToPropertiesSchema = true) where T : IHubSpotModel, new()
         {
-            var json = _serializer.SerializeEntity(entity, convertToPropertiesSchema);
+            string json = entity == null ? null : _serializer.SerializeEntity(entity, convertToPropertiesSchema);
 
             var data = SendRequest(absoluteUriPath, method, json, responseData => (T)_serializer.DeserializeEntity<T>(responseData, convertToPropertiesSchema));
 
@@ -39,7 +39,7 @@ namespace HubSpot.NET.Core
 
         public void Execute(string absoluteUriPath, object entity = null, Method method = Method.GET, bool convertToPropertiesSchema = true)
         {
-            var json = _serializer.SerializeEntity(entity, convertToPropertiesSchema);
+            string json = entity == null ? null : _serializer.SerializeEntity(entity, convertToPropertiesSchema);
             
             SendRequest(absoluteUriPath, method, json);
         }
@@ -47,7 +47,7 @@ namespace HubSpot.NET.Core
         public void ExecuteBatch(string absoluteUriPath, List<object> entities, Method method = Method.GET,
             bool convertToPropertiesSchema = true)
         {
-            var json = _serializer.SerializeEntity(entities, convertToPropertiesSchema);
+            string json = entities == null ? null : _serializer.SerializeEntity(entities, convertToPropertiesSchema);
 
             SendRequest(absoluteUriPath, method, json);
         }
@@ -79,7 +79,7 @@ namespace HubSpot.NET.Core
 
         public T ExecuteList<T>(string absoluteUriPath, object entity = null, Method method = Method.GET, bool convertToPropertiesSchema = true) where T : IHubSpotModel, new()
         {
-            var json = _serializer.SerializeEntity(entity);
+            string json = entity == null ? null : _serializer.SerializeEntity(entity);
 
             var data = SendRequest(
                 absoluteUriPath,
