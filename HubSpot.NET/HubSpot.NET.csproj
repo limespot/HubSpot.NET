@@ -3,18 +3,31 @@
   <PropertyGroup>
     <TargetFrameworks>net46;net451</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.6.18.1</Version>
+    <Version>0.6.18.2</Version>
     <Authors>Squared Up Ltd.</Authors>
     <Company>Squared Up Ltd.</Company>
-    <Description>C# .NET Wrapper around the common HubSpot APIs.</Description>
+    <Description>C# .NET Wrapper around the common HubSpot APIs. A back-port of newer releases based on old branch tags.</Description>
     <Copyright>2018 Squared Up Ltd.</Copyright>
+    <!--
     <PackageLicenseUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET/blob/master/LICENSE</PackageLicenseUrl>
+    -->
     <PackageProjectUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</RepositoryUrl>
     <PackageTags>hubspot api wrapper c# contact company deal engagement properties crm</PackageTags>
-    <PackageReleaseNotes>0.6.18</PackageReleaseNotes>
+    <PackageReleaseNotes>
+		0.6.18.2 Better support for boolean serialisation
+		
+		0.6.18.1 Better support for list searches
+		
+		0.6.18
+	</PackageReleaseNotes>
     <PackageId>_SquaredUp.HubSpot.NET</PackageId>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>

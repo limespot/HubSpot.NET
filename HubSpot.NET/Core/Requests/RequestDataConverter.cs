@@ -34,7 +34,12 @@ namespace HubSpot.NET.Core.Requests
                 // IF we have an complex type on the entity that we are trying to convert, let's NOT get the 
                 // string value of it, but simply pass the object along - it will be serialized later as JSON...
                 var propValue = prop.GetValue(entity);
-                var value = propValue.IsComplexType() ? propValue : propValue?.ToString();
+                var value = propValue.IsComplexType()
+                    ? propValue
+                    :
+                        prop.PropertyType == typeof(bool)
+                        ? propValue?.ToString().ToLowerInvariant()
+                        : propValue?.ToString();
                 var item = new HubspotDataEntityProp
                 {
                     Property = propSerializedName,
