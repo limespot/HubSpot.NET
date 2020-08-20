@@ -99,6 +99,7 @@ namespace HubSpot.NET.Api.Company
             {
                 path.SetQueryParam("properties", opts.PropertiesToInclude);
             }
+
             if (opts.Offset.HasValue)
             {
                 path = path.SetQueryParam("offset", opts.Offset);

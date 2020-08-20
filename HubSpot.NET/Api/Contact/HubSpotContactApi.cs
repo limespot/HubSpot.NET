@@ -140,7 +140,7 @@
                 path = path.SetQueryParam("vidOffset", opts.Offset);
             }
 
-            var data = _client.ExecuteList<ContactListHubSpotModel<T>>(path, opts);
+            var data = _client.ExecuteList<ContactListHubSpotModel<T>>(path);
 
             return data;
         }

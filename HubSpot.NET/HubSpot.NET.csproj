@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net46;net451</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.6.18.2</Version>
+    <Version>0.6.18.3</Version>
     <Authors>Squared Up Ltd.</Authors>
     <Company>Squared Up Ltd.</Company>
     <Description>C# .NET Wrapper around the common HubSpot APIs. A back-port of newer releases based on old branch tags.</Description>
@@ -15,9 +15,11 @@
     <RepositoryUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</RepositoryUrl>
     <PackageTags>hubspot api wrapper c# contact company deal engagement properties crm</PackageTags>
     <PackageReleaseNotes>
+		0.6.18.3 Better support for contact list searches
+		
 		0.6.18.2 Better support for boolean serialisation
 		
-		0.6.18.1 Better support for list searches
+		0.6.18.1 Better support for company list searches
 		
 		0.6.18
 	</PackageReleaseNotes>
