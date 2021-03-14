@@ -1,56 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>net46;net451</TargetFrameworks>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.6.18.3</Version>
-    <Authors>Squared Up Ltd.</Authors>
-    <Company>Squared Up Ltd.</Company>
-    <Description>C# .NET Wrapper around the common HubSpot APIs. A back-port of newer releases based on old branch tags.</Description>
-    <Copyright>2018 Squared Up Ltd.</Copyright>
-    <!--
+	<PropertyGroup>
+		<TargetFrameworks>net46;net451;netstandard2.0</TargetFrameworks>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Version>0.6.18.4</Version>
+		<Authors>Squared Up Ltd.</Authors>
+		<Company>Squared Up Ltd.</Company>
+		<Description>C# .NET Wrapper around the common HubSpot APIs. A back-port of newer releases based on old branch tags.</Description>
+		<Copyright>2018 Squared Up Ltd.</Copyright>
+		<!--
     <PackageLicenseUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET/blob/master/LICENSE</PackageLicenseUrl>
     -->
-    <PackageProjectUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</RepositoryUrl>
-    <PackageTags>hubspot api wrapper c# contact company deal engagement properties crm</PackageTags>
-    <PackageReleaseNotes>
-		0.6.18.3 Better support for contact list searches
-		
-		0.6.18.2 Better support for boolean serialisation
-		
-		0.6.18.1 Better support for company list searches
-		
-		0.6.18
-	</PackageReleaseNotes>
-    <PackageId>_SquaredUp.HubSpot.NET</PackageId>
-  </PropertyGroup>
+		<PackageProjectUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</RepositoryUrl>
+		<PackageTags>hubspot api wrapper c# contact company deal engagement properties crm</PackageTags>
+		<PackageReleaseNotes>
+			0.6.18.4 .NET Standard 2.0 support
 
-  <PropertyGroup>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-  </PropertyGroup>
+			0.6.18.3 Better support for contact list searches
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <LangVersion>7.1</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <LangVersion>7.1</LangVersion>
-  </PropertyGroup>
+			0.6.18.2 Better support for boolean serialisation
+
+			0.6.18.1 Better support for company list searches
+
+			0.6.18
+		</PackageReleaseNotes>
+		<PackageId>_SquaredUp.HubSpot.NET</PackageId>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<LangVersion>7.1</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<LangVersion>7.1</LangVersion>
+	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Flurl" Version="2.6.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
 	</ItemGroup>
 	<ItemGroup Condition=" '$(TargetFramework)' == 'NET46' ">
 		<PackageReference Include="RestSharp" Version="106.10.1" />
+		<Reference Include="Microsoft.CSharp" />
+		<Reference Include="System.Net.Http" />
 	</ItemGroup>
 	<ItemGroup Condition=" '$(TargetFramework)' == 'NET451' ">
 		<PackageReference Include="RestSharp" Version="105.2.3" />
+		<Reference Include="Microsoft.CSharp" />
+		<Reference Include="System.Net.Http" />
+	</ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+		<PackageReference Include="RestSharp" Version="106.10.1" />
+		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 	</ItemGroup>
 	<ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Net.Http" />
-  </ItemGroup>
+		<Folder Include="Properties\" />
+	</ItemGroup>
 </Project>
