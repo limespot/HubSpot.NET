@@ -2,9 +2,9 @@
 using System.Runtime.Serialization;
 using HubSpot.NET.Core.Interfaces;
 
-namespace HubSpot.NET.Api.Company.Dto
+namespace HubSpot.NET.Api
 {
-    public class CompanySearchHubSpotModel<T> : IHubSpotModel where T : CompanyHubSpotModel, new()
+    public class SearchHubSpotModel<T> : IHubSpotModel where T : new()
     {
 
         [DataMember(Name = "total")]
@@ -22,7 +22,7 @@ namespace HubSpot.NET.Api.Company.Dto
         [DataMember(Name = "results")]
         public IList<T> Results { get; set; } = new List<T>();
 
-        public string RouteBasePath => "/crm/v3/objects/companies";
+        public string RouteBasePath => "/crm/v3/objects";
 
         public bool IsNameValue => false;
 

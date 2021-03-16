@@ -232,5 +232,19 @@
 
             return data;
         }
+
+        public SearchHubSpotModel<T> Search<T>(SearchRequestOptions opts = null) where T : DealHubSpotModel, new()
+        {
+            if (opts == null)
+            {
+                opts = new SearchRequestOptions();
+            }
+
+            var path = "/crm/v3/objects/deals/search";
+
+            var data = _client.ExecuteList<SearchHubSpotModel<T>>(path, opts, Method.POST);
+
+            return data;
+        }
     }
 }

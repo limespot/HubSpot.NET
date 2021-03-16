@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using HubSpot.NET.Api;
 using HubSpot.NET.Api.Deal.Dto;
 
 namespace HubSpot.NET.Core.Interfaces
@@ -19,5 +19,8 @@ namespace HubSpot.NET.Core.Interfaces
         DealRecentListHubSpotModel<T> RecentlyUpdated<T>(DealRecentRequestOptions opts = null)
             where T : DealHubSpotModel, new();
         DealListHubSpotModel<T> ListAssociated<T>(bool includeAssociations, long hubId, ListRequestOptions opts = null, string objectName = "contact") where T :DealHubSpotModel, new();
+
+        SearchHubSpotModel<T> Search<T>(SearchRequestOptions opts = null)
+            where T : DealHubSpotModel, new();
     }
 }

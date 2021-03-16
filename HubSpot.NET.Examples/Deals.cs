@@ -1,4 +1,5 @@
-﻿using HubSpot.NET.Api.Deal.Dto;
+﻿using HubSpot.NET.Api;
+using HubSpot.NET.Api.Deal.Dto;
 using HubSpot.NET.Core;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,45 @@ namespace HubSpot.NET.Examples
             var deal = api.Deal.Create(new DealHubSpotModel()
             {
                 Amount = 10000,
-                Name = "New Deal #1"
+                Name = "New Deal #1",
+                DealType = "newbusiness",
+                Stage = "closedlost"
             });
+
+            /**
+             * Update a deal
+             */
+            deal.Name = "Updated Deal #1";
+            deal = api.Deal.Update(deal);
+
+            /**
+             * Search for a deal
+             */
+            var searchedDeal = api.Deal.Search<DealHubSpotModel>(new SearchRequestOptions()
+            {
+                FilterGroups = new List<SearchRequestFilterGroup>
+                {
+                    new SearchRequestFilterGroup
+                    {
+                        Filters = new List<SearchRequestFilter>
+                        {
+                            new SearchRequestFilter
+                            {
+                                Operator = "EQ",
+                                PropertyName = "dealname",
+                                Value = deal.Name
+                            }
+                        }
+                    }
+                },
+                PropertiesToInclude = new List<string>
+                {
+                    "dealname", "amount", "closedate", "pipeline", "dealstage"
+                }
+            });
+            foreach (var d in searchedDeal.Results)
+                if (d.Name != deal.Name)
+                    throw new InvalidOperationException("the found deal does not have the same name");
 
             /**
              * Delete a deal

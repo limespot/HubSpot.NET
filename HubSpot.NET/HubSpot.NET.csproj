@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net46;net451;netstandard2.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.6.18.4</Version>
+		<Version>0.6.19.1</Version>
 		<Authors>Squared Up Ltd.</Authors>
 		<Company>Squared Up Ltd.</Company>
 		<Description>C# .NET Wrapper around the common HubSpot APIs. A back-port of newer releases based on old branch tags.</Description>
@@ -15,6 +15,10 @@
 		<RepositoryUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</RepositoryUrl>
 		<PackageTags>hubspot api wrapper c# contact company deal engagement properties crm</PackageTags>
 		<PackageReleaseNotes>
+			0.6.19.1 Added ability to search for deals using v3 API with a patch for .NET Standard
+
+			0.6.18.5/0.6.19.0 Added ability to search for deals using v3 API
+
 			0.6.18.4 .NET Standard 2.0 support
 
 			0.6.18.3 Better support for contact list searches
@@ -38,6 +42,10 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<LangVersion>7.1</LangVersion>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="Api\Company\Dto\SearchRequestFilter.cs" />
+	  <Compile Remove="Api\Company\Dto\SearchRequestFilterGroup.cs" />
+	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Flurl" Version="2.6.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="10.0.3" />

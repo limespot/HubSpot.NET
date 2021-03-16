@@ -217,17 +217,17 @@ namespace HubSpot.NET.Core.Requests
 
                 IDictionary<string, Object> dynamicPropValue = dynamicProp.Value as IDictionary<string, Object>;
                 object dynamicValue;
-                if (dynamicPropValue == null)
+                if (dynamicPropValue != null)
                 {
-                    dynamicValue = dynamicPropValue;
-                    if (dynamicValue == null)
+                    if (!dynamicPropValue.TryGetValue("value", out dynamicValue))
                     {
                         continue;
                     }
                 }
-                else if (!dynamicPropValue.TryGetValue("value", out dynamicValue))
+                // not all responses are dictionaries but are sometimes nicely formatted objects
+                else
                 {
-                    continue;
+                    dynamicValue = dynamicProp.Value;
                 }
 
                 // TODO use properly serialized name of prop to find and set it's value
@@ -235,7 +235,7 @@ namespace HubSpot.NET.Core.Requests
 
                 if (targetProp != null)
                 {
-                    var isNullable = targetProp.PropertyType.Name.Contains("Nullable");
+                    var isNullable = targetProp.PropertyType.Name.Contains("Nullable") || targetProp.PropertyType == typeof(string);
 
                     var type = Nullable.GetUnderlyingType(targetProp.PropertyType) ?? targetProp.PropertyType;
 

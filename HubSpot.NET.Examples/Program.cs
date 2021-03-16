@@ -10,7 +10,7 @@ namespace HubSpot.NET.Examples
              * Initialize the API with your API Key
              * You can find or generate this under Integrations -> HubSpot API key
              */
-            var api = new HubSpotApi("YOUR API KEY HERE");
+            var api = new HubSpotApi(System.Configuration.ConfigurationManager.AppSettings["ApiKey"]);
 
             Deals.Example(api);
 
