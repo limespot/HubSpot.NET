@@ -104,7 +104,7 @@
                 path = path.SetQueryParam("properties", opts.PropertiesToInclude);
             }
 
-            var data = _client.ExecuteList<DealListHubSpotModel<T>>(path, opts);
+            var data = _client.ExecuteList<DealListHubSpotModel<T>>(path);
 
             return data;
         }
@@ -192,7 +192,7 @@
                 path = path.SetQueryParam("since", opts.Since);
             }
 
-            var data = _client.ExecuteList<DealRecentListHubSpotModel<T>>(path, opts);
+            var data = _client.ExecuteList<DealRecentListHubSpotModel<T>>(path);
 
             return data;
         }
@@ -228,11 +228,17 @@
                 path = path.SetQueryParam("since", opts.Since);
             }
 
-            var data = _client.ExecuteList<DealRecentListHubSpotModel<T>>(path, opts);
+            var data = _client.ExecuteList<DealRecentListHubSpotModel<T>>(path);
 
             return data;
         }
 
+        /// <summary>
+        /// Gets a list of deals based on a search criteria
+        /// </summary>
+        /// <typeparam name="T">Implementation of <see cref="DealHubSpotModel"/></typeparam>
+        /// <param name="opts">Options (limit, offset) and search criteria relating to request</param>
+        /// <returns>List of deals</returns>
         public SearchHubSpotModel<T> Search<T>(SearchRequestOptions opts = null) where T : DealHubSpotModel, new()
         {
             if (opts == null)
@@ -245,6 +251,51 @@
             var data = _client.ExecuteList<SearchHubSpotModel<T>>(path, opts, Method.POST);
 
             return data;
+        }
+
+        /// <summary>
+        /// Associate a Company to a deal
+        /// </summary>
+        /// <typeparam name="T">Implementation of <see cref="DealHubSpotModel"/></typeparam>
+        /// <param name="entity">The deal to associate the company with</param>
+        /// <param name="companyId">The Id of the company to associate the deal with</param>
+        public T AssociateToCompany<T>(T entity, long companyId) where T : DealHubSpotModel, new()
+        {
+            var path = "/crm-associations/v1/associations";
+
+            _client.Execute(path, new
+            {
+                fromObjectId = entity.Id,
+                toObjectId = companyId,
+                category = "HUBSPOT_DEFINED",
+                definitionId = 5 // see https://legacydocs.hubspot.com/docs/methods/crm-associations/crm-associations-overview
+            }, method: Method.PUT);
+            entity.Associations.AssociatedCompany = new[] { companyId };
+            return entity;
+        }
+
+        /// <summary>
+        /// Gets a list of associations for a given deal
+        /// </summary>
+        /// <typeparam name="T">Implementation of <see cref="DealHubSpotModel"/></typeparam>
+        /// <param name="entity">The deal to get associations for</param>
+        public T GetAssociations<T>(T entity) where T : DealHubSpotModel, new()
+        {
+            // see https://legacydocs.hubspot.com/docs/methods/crm-associations/crm-associations-overview
+            var companyPath = $"/crm-associations/v1/associations/{entity.Id}/HUBSPOT_DEFINED/5";
+
+            var companyAssociations = _client.ExecuteList<IdListHubSpotModel>(companyPath, convertToPropertiesSchema: false);
+            if (companyAssociations.Results.Any())
+                entity.Associations.AssociatedCompany = companyAssociations.Results.ToArray();
+
+            // see https://legacydocs.hubspot.com/docs/methods/crm-associations/crm-associations-overview
+            var contactPath = $"/crm-associations/v1/associations/{entity.Id}/HUBSPOT_DEFINED/3";
+
+            var contactAssociations = _client.ExecuteList<IdListHubSpotModel>(contactPath, convertToPropertiesSchema: false);
+            if (contactAssociations.Results.Any())
+                entity.Associations.AssociatedContacts = contactAssociations.Results.ToArray();
+
+            return entity;
         }
     }
 }

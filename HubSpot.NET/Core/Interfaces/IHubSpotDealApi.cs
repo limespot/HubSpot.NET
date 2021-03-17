@@ -22,5 +22,11 @@ namespace HubSpot.NET.Core.Interfaces
 
         SearchHubSpotModel<T> Search<T>(SearchRequestOptions opts = null)
             where T : DealHubSpotModel, new();
+
+        T AssociateToCompany<T>(T entity, long companyId)
+            where T : DealHubSpotModel, new();
+
+        T GetAssociations<T>(T entity)
+            where T : DealHubSpotModel, new();
     }
 }

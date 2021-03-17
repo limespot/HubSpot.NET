@@ -25,6 +25,7 @@ namespace HubSpot.NET.Examples
              * Update a deal
              */
             deal.Name = "Updated Deal #1";
+            deal.CloseDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
             deal = api.Deal.Update(deal);
 
             /**
@@ -53,13 +54,17 @@ namespace HubSpot.NET.Examples
                 }
             });
             foreach (var d in searchedDeal.Results)
+            {
+                if (d.Id == null)
+                    throw new InvalidOperationException("The found deal does not have an ID set");
                 if (d.Name != deal.Name)
-                    throw new InvalidOperationException("the found deal does not have the same name");
+                    throw new InvalidOperationException("The found deal does not have the same name");
+            }
 
             /**
-             * Delete a deal
+             * Get Associations
              */
-            api.Deal.Delete(deal.Id.Value);
+            deal = api.Deal.GetAssociations(deal);
 
             /**
              * Get all deals
@@ -98,16 +103,21 @@ namespace HubSpot.NET.Examples
             });
 
             /**
-             *  Get recently created deals since 7 days ago, limited to 10 records
+             *  Get recently updated deals since 7 days ago, limited to 10 records
              *  Will default to 30 day if Since is not set.
              *  Using DealRecentListHubSpotModel to accomodate deals returning in the "results" property.
              */
-            var recentlyUpdatedDeals = api.Deal.RecentlyCreated<DealHubSpotModel>(new DealRecentRequestOptions
+            var recentlyUpdatedDeals = api.Deal.RecentlyUpdated<DealHubSpotModel>(new DealRecentRequestOptions
             {
                 Limit = 10,
                 IncludePropertyVersion = false,
                 Since = since
             });
+
+            /**
+             * Delete a deal
+             */
+            api.Deal.Delete(deal.Id.Value);
         }
     }
 }

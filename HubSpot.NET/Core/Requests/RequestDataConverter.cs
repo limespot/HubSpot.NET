@@ -105,8 +105,7 @@ namespace HubSpot.NET.Core.Requests
             // get a handle to Add on the list (actually from ICollection)
             var listAddMethod = dataTargetProp.PropertyType.FindMethodRecursively("Add", genericEntityType);
             // Condensed version of : https://stackoverflow.com/a/4194063/1662254
-            var listInstance =
-                Activator.CreateInstance(typeof(List<>).MakeGenericType(genericEntityType));
+            var listInstance = Activator.CreateInstance(typeof(List<>).MakeGenericType(genericEntityType));
             if (listAddMethod == null)
             {
                 throw new ArgumentException("Unable to locate Add method on the list of items to deserialize into - is it an IList?");
@@ -195,6 +194,16 @@ namespace HubSpot.NET.Core.Requests
                 // TODO use properly serialized name of prop to find it
                 var dealIdProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "dealId");
                 dealIdProp?.SetValue(dto, dealIdData);
+            }
+            // unless this is from the new v3 search api
+            else if (dto is Api.Deal.Dto.DealHubSpotModel && expandoDict.TryGetValue("id", out dealIdData))
+            {
+                // TODO use properly serialized name of prop to find it
+                var dealIdProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "dealId");
+                long? dealIdValue = null;
+                if (dealIdData is string && dealIdData != null)
+                    dealIdValue = Convert.ToInt64(dealIdData);
+                dealIdProp?.SetValue(dto, dealIdValue);
             }
 
             // The companyId is the "id" of the company entity
