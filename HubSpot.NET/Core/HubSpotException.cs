@@ -1,15 +1,19 @@
 using System;
 using System.Net;
+using System.Runtime.Serialization;
 
 namespace HubSpot.NET.Core
 {
     [Serializable]
     public class HubSpotException : Exception
     {
+        [DataMember]
         public string RawJsonResponse { get; set; }
 
+        [DataMember]
         public HubSpotError ReturnedError { get; set; }
 
+        [DataMember]
         HttpStatusCode StatusCode { get; set; }
 
         public HubSpotException()
