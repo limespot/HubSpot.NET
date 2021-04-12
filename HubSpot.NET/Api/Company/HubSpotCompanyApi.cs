@@ -141,7 +141,7 @@ namespace HubSpot.NET.Api.Company
             _client.Execute(path, method: Method.DELETE);
         }
 
-        public CompanySearchHubSpotModel<T> Search<T>(Dto.CompanySearchRequestOptions opts = null) where T : CompanyHubSpotModel, new()
+        public CompanySearchHubSpotModel<T> Search<T>(CompanySearchRequestOptions opts = null) where T : CompanyHubSpotModel, new()
         {
             if (opts == null)
             {
