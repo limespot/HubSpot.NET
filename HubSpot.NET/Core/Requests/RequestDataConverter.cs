@@ -213,6 +213,15 @@ namespace HubSpot.NET.Core.Requests
                 var companyIdProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "companyId");
                 companyIdProp?.SetValue(dto, companyIdData);
             }
+            else if (dto is Api.Company.Dto.CompanyHubSpotModel && expandoDict.TryGetValue("id", out companyIdData))
+            {
+                // TODO use properly serialized name of prop to find it
+                var companyIdProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "companyId");
+                long? companyIdValue = null;
+                if (companyIdData is string && companyIdData != null)
+                    companyIdValue = Convert.ToInt64(companyIdData);
+                companyIdProp?.SetValue(dto, companyIdValue);
+            }
 
             // The Properties object in the json / response data contains all the props we wish to map - if that does not exist
             // we cannot proceeed

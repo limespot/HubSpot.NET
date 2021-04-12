@@ -1,4 +1,5 @@
-﻿using HubSpot.NET.Api.Company;
+﻿using HubSpot.NET.Api;
+using HubSpot.NET.Api.Company;
 using HubSpot.NET.Api.Company.Dto;
 
 namespace HubSpot.NET.Core.Interfaces
@@ -11,6 +12,9 @@ namespace HubSpot.NET.Core.Interfaces
         CompanyListHubSpotModel<T> List<T>(ListRequestOptions opts = null) where T : CompanyHubSpotModel, new();
         T GetById<T>(long companyId) where T : CompanyHubSpotModel, new();
         T Update<T>(T entity) where T : CompanyHubSpotModel, new();
-        CompanySearchHubSpotModel<T> Search<T>(CompanySearchRequestOptions opts = null) where T : CompanyHubSpotModel, new();
+        CompanySearchHubSpotModel<T> Search<T>(SearchRequestOptions opts = null) where T : CompanyHubSpotModel, new();
+
+        T GetAssociations<T>(T entity)
+            where T : CompanyHubSpotModel, new();
     }
 }

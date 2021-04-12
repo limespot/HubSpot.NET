@@ -3,6 +3,7 @@ using HubSpot.NET.Core.Interfaces;
 
 namespace HubSpot.NET.Api.Company.Dto
 {
+
     /// <summary>
     /// Models a Company entity within HubSpot. Default properties are included here
     /// with the intention that you'd extend this class with properties specific to 
@@ -11,6 +12,10 @@ namespace HubSpot.NET.Api.Company.Dto
     [DataContract]
     public class CompanyHubSpotModel : IHubSpotModel
     {
+        public CompanyHubSpotModel()
+        {
+            Associations = new CompanyHubSpotAssociations();
+        }
         [DataMember(Name = "companyId")]
         [IgnoreDataMember]
         public long? Id { get; set; }
@@ -32,6 +37,9 @@ namespace HubSpot.NET.Api.Company.Dto
 
         public string RouteBasePath => "/companies/v2";
         public bool IsNameValue => true;
+
+        [IgnoreDataMember]
+        public CompanyHubSpotAssociations Associations { get; }
 
         public virtual void ToHubSpotDataEntity(ref dynamic converted)
         {

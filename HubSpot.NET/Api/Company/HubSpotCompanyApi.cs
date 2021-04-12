@@ -141,11 +141,11 @@ namespace HubSpot.NET.Api.Company
             _client.Execute(path, method: Method.DELETE);
         }
 
-        public CompanySearchHubSpotModel<T> Search<T>(CompanySearchRequestOptions opts = null) where T : CompanyHubSpotModel, new()
+        public CompanySearchHubSpotModel<T> Search<T>(SearchRequestOptions opts = null) where T : CompanyHubSpotModel, new()
         {
             if (opts == null)
             {
-                opts = new Dto.CompanySearchRequestOptions();
+                opts = new SearchRequestOptions();
             }
 
             var path = "/crm/v3/objects/companies/search";
@@ -153,6 +153,30 @@ namespace HubSpot.NET.Api.Company
             var data = _client.ExecuteList<CompanySearchHubSpotModel<T>>(path, opts, Method.POST);
 
             return data;
+        }
+
+        /// <summary>
+        /// Gets a list of associations for a given deal
+        /// </summary>
+        /// <typeparam name="T">Implementation of <see cref="CompanyHubSpotModel"/></typeparam>
+        /// <param name="entity">The deal to get associations for</param>
+        public T GetAssociations<T>(T entity) where T : CompanyHubSpotModel, new()
+        {
+            // see https://legacydocs.hubspot.com/docs/methods/crm-associations/crm-associations-overview
+            var companyPath = $"/crm-associations/v1/associations/{entity.Id}/HUBSPOT_DEFINED/6";
+
+            var companyAssociations = _client.ExecuteList<IdListHubSpotModel>(companyPath, convertToPropertiesSchema: false);
+            if (companyAssociations.Results.Any())
+                entity.Associations.AssociatedDeals = companyAssociations.Results.ToArray();
+
+            // see https://legacydocs.hubspot.com/docs/methods/crm-associations/crm-associations-overview
+            var contactPath = $"/crm-associations/v1/associations/{entity.Id}/HUBSPOT_DEFINED/2";
+
+            var contactAssociations = _client.ExecuteList<IdListHubSpotModel>(contactPath, convertToPropertiesSchema: false);
+            if (contactAssociations.Results.Any())
+                entity.Associations.AssociatedContacts = contactAssociations.Results.ToArray();
+
+            return entity;
         }
     }
 }

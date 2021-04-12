@@ -20,7 +20,7 @@ namespace HubSpot.NET.Core
         /// <value>
         /// The number of items to return.
         /// </value>
-        public int Limit
+        public virtual int Limit
         {
             get => _limit;
             set
@@ -60,8 +60,8 @@ namespace HubSpot.NET.Core
         /// The return DTO from List contains the current "offset" that you can inject into your next list call 
         /// to continue the listing process
         /// </remarks>
-        public long? Offset { get; set; } = null;
+        public virtual long? Offset { get; set; } = null;
 
-        public List<string> PropertiesToInclude { get; set; } = new List<string>();
+        public virtual List<string> PropertiesToInclude { get; set; } = new List<string>();
     }
 }

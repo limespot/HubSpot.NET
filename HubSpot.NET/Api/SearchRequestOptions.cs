@@ -30,7 +30,7 @@ namespace HubSpot.NET.Api
         /// The number of items to return.
         /// </value>
         [DataMember(Name = "limit")]
-        public int Limit
+        public override int Limit
         {
             get => _limit;
             set
@@ -71,9 +71,9 @@ namespace HubSpot.NET.Api
         /// to continue the listing process
         /// </remarks>
         [DataMember(Name = "after")]
-        public string Offset { get; set; } = null;
+        public new string Offset { get; set; } = null;
 
         [DataMember(Name = "properties")]
-        public List<string> PropertiesToInclude { get; set; }
+        public override List<string> PropertiesToInclude { get; set; }
     }
 }

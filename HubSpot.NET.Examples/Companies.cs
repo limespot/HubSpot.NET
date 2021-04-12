@@ -1,4 +1,7 @@
-﻿using HubSpot.NET.Api.Company;
+﻿using System;
+using System.Collections.Generic;
+using HubSpot.NET.Api;
+using HubSpot.NET.Api.Company;
 using HubSpot.NET.Api.Company.Dto;
 using HubSpot.NET.Core;
 
@@ -22,11 +25,6 @@ namespace HubSpot.NET.Examples
              */
             company.Description = "Data Visualization for Enterprise IT";
             api.Company.Update(company);
-           
-            /**
-             * Delete a contact
-             */
-            api.Company.Delete(company.Id.Value);
 
             /**
              * Get all companies with domain name "squaredup.com"
@@ -35,6 +33,50 @@ namespace HubSpot.NET.Examples
             {
                 Limit = 10
             });
+
+            /**
+             * Search for a company
+             */
+            var searchedCompany = api.Company.Search<CompanyHubSpotModel>(new SearchRequestOptions()
+            {
+                FilterGroups = new List<SearchRequestFilterGroup>
+                {
+                    new SearchRequestFilterGroup
+                    {
+                        Filters = new List<SearchRequestFilter>
+                        {
+                            new SearchRequestFilter
+                            {
+                                PropertyName = "name",
+                                Value = company.Name
+                            }
+                        }
+                    }
+                },
+                PropertiesToInclude = new List<string>
+                {
+                    "domain", "name", "website"
+                }
+            });
+            if (searchedCompany.Total < 1)
+                throw new InvalidOperationException("No companies found.");
+            foreach (var d in searchedCompany.Results)
+            {
+                if (d.Id == null)
+                    throw new InvalidOperationException("The found company does not have an ID set");
+                if (d.Name != company.Name)
+                    throw new InvalidOperationException("The found company does not have the same name");
+            }
+
+            /**
+             * Get Associations
+             */
+            company = api.Company.GetAssociations(company);
+           
+            /**
+             * Delete a contact
+             */
+            api.Company.Delete(company.Id.Value);
         }
     }
 }
