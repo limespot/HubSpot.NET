@@ -38,8 +38,12 @@ namespace HubSpot.NET.Core.Requests
                     ? propValue
                     :
                         prop.PropertyType == typeof(bool)
-                        ? propValue?.ToString().ToLowerInvariant()
-                        : propValue?.ToString();
+                            ? propValue?.ToString().ToLowerInvariant()
+                            :
+                                prop.PropertyType == typeof(bool?)
+                                    ? propValue?.ToString().ToLowerInvariant()
+                                    : propValue?.ToString();
+
                 var item = new HubspotDataEntityProp
                 {
                     Property = propSerializedName,
