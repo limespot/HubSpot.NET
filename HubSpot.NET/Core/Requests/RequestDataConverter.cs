@@ -227,6 +227,21 @@ namespace HubSpot.NET.Core.Requests
                 companyIdProp?.SetValue(dto, companyIdValue);
             }
 
+            // DateCreated
+            if (expandoDict.TryGetValue("createdAt", out var createdAtData))
+            {
+                // TODO use properly serialized name of prop to find it
+                var createdAtProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "createdAt");
+                createdAtProp?.SetValue(dto, createdAtData);
+            }
+            // DateUpdated
+            if (expandoDict.TryGetValue("updatedAt", out var updatedAtData))
+            {
+                // TODO use properly serialized name of prop to find it
+                var updatedAtProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "updatedAt");
+                updatedAtProp?.SetValue(dto, updatedAtData);
+            }
+
             // The Properties object in the json / response data contains all the props we wish to map - if that does not exist
             // we cannot proceeed
             if (!expandoDict.TryGetValue("properties", out var dynamicProperties)) return dto;

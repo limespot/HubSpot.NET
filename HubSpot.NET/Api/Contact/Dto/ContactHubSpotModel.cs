@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using HubSpot.NET.Core.Interfaces;
 
 namespace HubSpot.NET.Api.Contact.Dto
@@ -43,6 +44,12 @@ namespace HubSpot.NET.Api.Contact.Dto
 
         [DataMember(Name="hubspot_owner_id")]
         public long? OwnerId { get;set; }
+
+        [DataMember(Name = "createdAt")]
+        public DateTime? CreatedAt { get; set; }
+
+        [DataMember(Name = "updatedAt")]
+        public DateTime? UpdatedAt { get; set; }
 
         public string RouteBasePath => "/contacts/v1";
         public bool IsNameValue => false;

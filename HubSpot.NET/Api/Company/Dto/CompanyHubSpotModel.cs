@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using HubSpot.NET.Core.Interfaces;
 
 namespace HubSpot.NET.Api.Company.Dto
@@ -34,6 +35,12 @@ namespace HubSpot.NET.Api.Company.Dto
 
         [DataMember(Name = "country")]
         public string Country { get; set; }
+
+        [DataMember(Name = "createdAt")]
+        public DateTime? CreatedAt { get; set; }
+
+        [DataMember(Name = "updatedAt")]
+        public DateTime? UpdatedAt { get; set; }
 
         public string RouteBasePath => "/companies/v2";
         public bool IsNameValue => true;
