@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net46;net451;netstandard2.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.6.19.7</Version>
+		<Version>0.6.19.8</Version>
 		<Authors>cdmdotnet Limited - originally Squared Up Ltd.</Authors>
 		<Company>cdmdotnet Limited - originally Squared Up Ltd.</Company>
 		<Description>C# .NET Wrapper around the common HubSpot APIs. This is a fork/continuation of the original project that now appears not to be maintained.</Description>
@@ -15,6 +15,8 @@
 		<RepositoryUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</RepositoryUrl>
 		<PackageTags>hubspot api wrapper c# contact company deal engagement properties crm</PackageTags>
 		<PackageReleaseNotes>
+			0.6.19.8 Patched the ability to get all contact and deal associations for a company to automatically run through all pages of results.
+
 			0.6.19.7 Added date created and date updated properties to the Company model. Patched contact search.
 
 			0.6.19.6 Patched handling for nullable boolean properties.
@@ -28,18 +30,6 @@
 			0.6.19.2 Patched listing deals. Patched deals search to include Id property handling.
 
 			0.6.19.1 Added ability to search for deals using v3 API with a patch for .NET Standard
-
-			0.6.18.5/0.6.19.0 Added ability to search for deals using v3 API
-
-			0.6.18.4 .NET Standard 2.0 support
-
-			0.6.18.3 Better support for contact list searches
-
-			0.6.18.2 Better support for boolean serialisation
-
-			0.6.18.1 Better support for company list searches
-
-			0.6.18
 		</PackageReleaseNotes>
 		<PackageId>_SquaredUp.HubSpot.NET</PackageId>
 	</PropertyGroup>

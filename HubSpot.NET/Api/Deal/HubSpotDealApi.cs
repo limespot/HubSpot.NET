@@ -1,7 +1,8 @@
 ﻿namespace HubSpot.NET.Api.Deal
 {
     using System;
-    using System.Linq;
+	using System.Collections.Generic;
+	using System.Linq;
     using System.Net;
     using Flurl;
     using HubSpot.NET.Api.Deal.Dto;
@@ -283,17 +284,42 @@
         {
             // see https://legacydocs.hubspot.com/docs/methods/crm-associations/crm-associations-overview
             var companyPath = $"/crm-associations/v1/associations/{entity.Id}/HUBSPOT_DEFINED/5";
+            long? offSet = null;
 
-            var companyAssociations = _client.ExecuteList<IdListHubSpotModel>(companyPath, convertToPropertiesSchema: false);
-            if (companyAssociations.Results.Any())
-                entity.Associations.AssociatedCompany = companyAssociations.Results.ToArray();
+            var companyResults = new List<long>();
+            do
+            {
+                var companyAssociations = _client.ExecuteList<AssociationIdListHubSpotModel>(string.Format("{0}?limit=100{1}", companyPath, offSet == null ? null : "&offset=" + offSet), convertToPropertiesSchema: false);
+                if (companyAssociations.Results.Any())
+                    companyResults.AddRange(companyAssociations.Results);
+                if (companyAssociations.HasMore)
+                    offSet = companyAssociations.Offset;
+                else
+                    offSet = null;
+            } while (offSet != null);
+            if (companyResults.Any())
+                entity.Associations.AssociatedCompany = companyResults.ToArray();
+            else
+                entity.Associations.AssociatedCompany = null;
 
             // see https://legacydocs.hubspot.com/docs/methods/crm-associations/crm-associations-overview
             var contactPath = $"/crm-associations/v1/associations/{entity.Id}/HUBSPOT_DEFINED/3";
 
-            var contactAssociations = _client.ExecuteList<IdListHubSpotModel>(contactPath, convertToPropertiesSchema: false);
-            if (contactAssociations.Results.Any())
-                entity.Associations.AssociatedContacts = contactAssociations.Results.ToArray();
+            var contactResults = new List<long>();
+            do
+            {
+                var contactAssociations = _client.ExecuteList<AssociationIdListHubSpotModel>(string.Format("{0}?limit=100{1}", contactPath, offSet == null ? null : "&offset=" + offSet), convertToPropertiesSchema: false);
+                if (contactAssociations.Results.Any())
+                    contactResults.AddRange(contactAssociations.Results);
+                if (contactAssociations.HasMore)
+                    offSet = contactAssociations.Offset;
+                else
+                    offSet = null;
+            } while (offSet != null);
+            if (contactResults.Any())
+                entity.Associations.AssociatedContacts = contactResults.ToArray();
+            else
+                entity.Associations.AssociatedContacts = null;
 
             return entity;
         }
