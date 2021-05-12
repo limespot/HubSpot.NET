@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net46;net451;netstandard2.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.6.19.8</Version>
+		<Version>0.6.19.9</Version>
 		<Authors>cdmdotnet Limited - originally Squared Up Ltd.</Authors>
 		<Company>cdmdotnet Limited - originally Squared Up Ltd.</Company>
 		<Description>C# .NET Wrapper around the common HubSpot APIs. This is a fork/continuation of the original project that now appears not to be maintained.</Description>
@@ -15,6 +15,8 @@
 		<RepositoryUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</RepositoryUrl>
 		<PackageTags>hubspot api wrapper c# contact company deal engagement properties crm</PackageTags>
 		<PackageReleaseNotes>
+			0.6.19.9 Patched the ability to update deals - two date fields were miss-matched.
+
 			0.6.19.8 Patched the ability to get all contact and deal associations for a company to automatically run through all pages of results.
 
 			0.6.19.7 Added date created and date updated properties to the Company model. Patched contact search.

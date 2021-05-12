@@ -47,11 +47,8 @@ namespace HubSpot.NET.Api.Deal.Dto
         [DataMember(Name = "dealtype")]
         public string DealType { get; set; }
 
-        [DataMember(Name = "createdAt")]
-        public DateTime? CreatedAt { get; set; }
-
-        [DataMember(Name = "updatedAt")]
-        public DateTime? UpdatedAt { get; set; }
+        [DataMember(Name = "createdate")]
+        public DateTime? DateCreated { get; set; }
 
         [IgnoreDataMember]
         public DealHubSpotAssociations Associations { get; }
