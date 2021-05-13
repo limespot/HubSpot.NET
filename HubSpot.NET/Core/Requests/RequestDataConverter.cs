@@ -44,6 +44,21 @@ namespace HubSpot.NET.Core.Requests
                                     ? propValue?.ToString().ToLowerInvariant()
                                     : propValue?.ToString();
 
+                if (entity is Api.Deal.Dto.DealHubSpotModel && propSerializedName == "createdate")
+                {
+                    if (value != null && propValue is DateTime)
+                    {
+                        value = Convert.ToInt64(Math.Floor(((DateTime)propValue).Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds));
+                    }
+                }
+                if (entity is Api.Deal.Dto.DealHubSpotModel && propSerializedName == "closedate")
+                {
+                    if (value != null && propValue is DateTime)
+                    {
+                        value = Convert.ToInt64(Math.Floor(((DateTime)propValue).Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds));
+                    }
+                }
+
                 var item = new HubspotDataEntityProp
                 {
                     Property = propSerializedName,
@@ -286,7 +301,13 @@ namespace HubSpot.NET.Core.Requests
                     }
                     else
                     {
-                        var value = dynamicValue.GetType() == type ? dynamicValue : Convert.ChangeType(dynamicValue, type);
+                        var value = dynamicValue.GetType() == type
+                            ? dynamicValue :
+                                (dynamicValue is long) && type == typeof(DateTime)
+                                ? new DateTime(1970, 1, 1).AddMilliseconds((long)dynamicValue)
+                                : (dynamicValue is string && long.TryParse((string)dynamicValue, out long dynamicLongValue)) && type == typeof(DateTime)
+                                    ? new DateTime(1970, 1, 1).AddMilliseconds((long)dynamicLongValue)
+                                    : Convert.ChangeType(dynamicValue, type);
                         targetProp.SetValue(dto, value);
                     }
                 }

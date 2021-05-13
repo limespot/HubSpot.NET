@@ -18,14 +18,15 @@ namespace HubSpot.NET.Examples
                 Amount = 10000,
                 Name = "New Deal #1",
                 DealType = "newbusiness",
-                Stage = "closedlost"
+                Stage = "closedlost",
+                DateCreated = DateTime.UtcNow
             });
 
             /**
              * Update a deal
              */
             deal.Name = "Updated Deal #1";
-            deal.CloseDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
+            deal.CloseDate = DateTime.UtcNow;
             deal = api.Deal.Update(deal);
 
             /**
