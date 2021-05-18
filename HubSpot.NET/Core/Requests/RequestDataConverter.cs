@@ -35,12 +35,19 @@ namespace HubSpot.NET.Core.Requests
                 // IF we have an complex type on the entity that we are trying to convert, let's NOT get the 
                 // string value of it, but simply pass the object along - it will be serialized later as JSON...
                 var propValue = prop.GetValue(entity);
+                bool isLongDateTime = Attribute.GetCustomAttributes(prop).Any(a => a.GetType() == typeof(LongDateTimeAttribute));
                 bool isLongDate = Attribute.GetCustomAttributes(prop).Any(a => a.GetType() == typeof(LongDateAttribute));
                 object value = propValue.IsComplexType()
                     ? propValue
                     :
-                        isLongDate
-                            ? propValue == null ? null : (object)Convert.ToInt64(Math.Floor(((DateTime)propValue).Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds))
+                        prop.PropertyType == typeof(DateTime?) || prop.PropertyType == typeof(DateTime)
+                            ?
+                                isLongDateTime
+                                    ? propValue == null ? null : (object)Convert.ToInt64(Math.Floor(((DateTime)propValue).Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds))
+                                    :
+                                        isLongDate
+                                            ? propValue == null ? null : (object)Convert.ToInt64(Math.Floor(((DateTime)propValue).Date.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds))
+                                            : propValue == null ? null : (object)((DateTime)propValue).ToString("YYYY-MM-DD")
                             :
                                 prop.PropertyType == typeof(bool)
                                     ? propValue?.ToString().ToLowerInvariant()

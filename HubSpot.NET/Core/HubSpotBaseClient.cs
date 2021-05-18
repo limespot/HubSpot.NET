@@ -91,7 +91,7 @@ namespace HubSpot.NET.Core
 
         private T SendRequest<T>(string path, Method method, string json, Func<string, T> deserializeFunc) where T : IHubSpotModel, new()
         {
-            var responseData = SendRequest(path, method, json);
+            string responseData = SendRequest(path, method, json);
 
             if (string.IsNullOrWhiteSpace(responseData))
             {
