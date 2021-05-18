@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using HubSpot.NET.Core.Attributes;
 using HubSpot.NET.Core.Interfaces;
 
 namespace HubSpot.NET.Api.Deal.Dto
@@ -39,6 +40,7 @@ namespace HubSpot.NET.Api.Deal.Dto
         public long? OwnerId { get; set; }
 
         [DataMember(Name = "closedate")]
+        [LongDate]
         public DateTime? CloseDate { get; set; }
 
         [DataMember(Name = "amount")]
@@ -48,6 +50,7 @@ namespace HubSpot.NET.Api.Deal.Dto
         public string DealType { get; set; }
 
         [DataMember(Name = "createdate")]
+        [LongDate]
         public DateTime? DateCreated { get; set; }
 
         [IgnoreDataMember]

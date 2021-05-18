@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
+using HubSpot.NET.Core.Attributes;
 using HubSpot.NET.Core.Extensions;
 using HubSpot.NET.Core.Interfaces;
 
@@ -34,30 +35,19 @@ namespace HubSpot.NET.Core.Requests
                 // IF we have an complex type on the entity that we are trying to convert, let's NOT get the 
                 // string value of it, but simply pass the object along - it will be serialized later as JSON...
                 var propValue = prop.GetValue(entity);
-                var value = propValue.IsComplexType()
+                bool isLongDate = Attribute.GetCustomAttributes(prop).Any(a => a.GetType() == typeof(LongDateAttribute));
+                object value = propValue.IsComplexType()
                     ? propValue
                     :
-                        prop.PropertyType == typeof(bool)
-                            ? propValue?.ToString().ToLowerInvariant()
+                        isLongDate
+                            ? propValue == null ? null : (object)Convert.ToInt64(Math.Floor(((DateTime)propValue).Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds))
                             :
-                                prop.PropertyType == typeof(bool?)
+                                prop.PropertyType == typeof(bool)
                                     ? propValue?.ToString().ToLowerInvariant()
-                                    : propValue?.ToString();
-
-                if (entity is Api.Deal.Dto.DealHubSpotModel && propSerializedName == "createdate")
-                {
-                    if (value != null && propValue is DateTime)
-                    {
-                        value = Convert.ToInt64(Math.Floor(((DateTime)propValue).Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds));
-                    }
-                }
-                if (entity is Api.Deal.Dto.DealHubSpotModel && propSerializedName == "closedate")
-                {
-                    if (value != null && propValue is DateTime)
-                    {
-                        value = Convert.ToInt64(Math.Floor(((DateTime)propValue).Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds));
-                    }
-                }
+                                    :
+                                        prop.PropertyType == typeof(bool?)
+                                            ? propValue?.ToString().ToLowerInvariant()
+                                            : propValue?.ToString();
 
                 var item = new HubspotDataEntityProp
                 {
