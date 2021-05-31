@@ -29,16 +29,34 @@ namespace HubSpot.NET.Core
             RawJsonResponse = jsonResponse;
         }
 
-         public HubSpotException(string message, HubSpotError error) : this(message)
+        public HubSpotException(string message, HubSpotError error) : this(message)
         {
             ReturnedError = error;
         }
 
-       public HubSpotException(string message, HubSpotError error, string responseContent) : this(message, error)
+        public HubSpotException(string message, HubSpotError error, string responseContent) : this(message, error)
         {
             RawJsonResponse = responseContent;
         }
 
         public override string Message => base.Message + $", Response = {(string.IsNullOrWhiteSpace(RawJsonResponse) ? ReturnedError.ToString() : RawJsonResponse)}";
+
+        public HubSpotException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
+
+        protected HubSpotException(SerializationInfo serializationInfo, StreamingContext streamingContext)
+            : base(serializationInfo, streamingContext)
+        {
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("RawJsonResponse", RawJsonResponse);
+            info.AddValue("ReturnedError", ReturnedError);
+            info.AddValue("StatusCode", StatusCode);
+            base.GetObjectData(info, context);
+        }
     }
 }
