@@ -276,6 +276,27 @@
         }
 
         /// <summary>
+        /// Associate a Cntact to a deal
+        /// </summary>
+        /// <typeparam name="T">Implementation of <see cref="DealHubSpotModel"/></typeparam>
+        /// <param name="entity">The deal to associate the contact with</param>
+        /// <param name="contactId">The Id of the contact to associate the deal with</param>
+        public T AssociateToContact<T>(T entity, long contactId) where T : DealHubSpotModel, new()
+        {
+            var path = "/crm-associations/v1/associations";
+
+            _client.Execute(path, new
+            {
+                fromObjectId = entity.Id,
+                toObjectId = contactId,
+                category = "HUBSPOT_DEFINED",
+                definitionId = 3 // see https://legacydocs.hubspot.com/docs/methods/crm-associations/crm-associations-overview
+            }, method: Method.PUT);
+            entity.Associations.AssociatedContacts = new[] { contactId };
+            return entity;
+        }
+
+        /// <summary>
         /// Gets a list of associations for a given deal
         /// </summary>
         /// <typeparam name="T">Implementation of <see cref="DealHubSpotModel"/></typeparam>
@@ -323,5 +344,5 @@
 
             return entity;
         }
-    }
+	}
 }

@@ -26,6 +26,9 @@ namespace HubSpot.NET.Core.Interfaces
         T AssociateToCompany<T>(T entity, long companyId)
             where T : DealHubSpotModel, new();
 
+        T AssociateToContact<T>(T entity, long contactId)
+            where T : DealHubSpotModel, new();
+
         T GetAssociations<T>(T entity)
             where T : DealHubSpotModel, new();
     }
