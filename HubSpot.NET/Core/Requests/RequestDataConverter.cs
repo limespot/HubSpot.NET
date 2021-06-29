@@ -304,10 +304,10 @@ namespace HubSpot.NET.Core.Requests
                                 ? new DateTime(1970, 1, 1).AddMilliseconds((long)dynamicValue)
                                 : (dynamicValue is string && long.TryParse((string)dynamicValue, out long dynamicLongValue)) && type == typeof(DateTime)
                                     ? new DateTime(1970, 1, 1).AddMilliseconds((long)dynamicLongValue)
-                                    : (dynamicValue is string) && (typeof(IList<string>).IsAssignableFrom(type) || typeof(IEnumerable<string>) == type)
-                                        ? Convert.ChangeType(((string)dynamicValue)?.Split(',').ToList(), type)
-                                        : (dynamicValue is string) && typeof(string[]) == type
-                                            ? Convert.ChangeType(((string)dynamicValue)?.Split(','), type)
+                                    : (dynamicValue is string) && typeof(string[]) == type
+                                        ? Convert.ChangeType(((string)dynamicValue)?.Split(','), type)
+                                        : (dynamicValue is string) && (typeof(IList<string>).IsAssignableFrom(type) || typeof(IEnumerable<string>) == type)
+                                            ? Convert.ChangeType(((string)dynamicValue)?.Split(',').ToList(), type)
                                             : Convert.ChangeType(dynamicValue, type);
                         targetProp.SetValue(dto, value);
                     }
