@@ -47,7 +47,7 @@ namespace HubSpot.NET.Core.Requests
                                     :
                                         isLongDate
                                             ? propValue == null ? null : (object)Convert.ToInt64(Math.Floor(((DateTime)propValue).Date.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds))
-                                            : propValue == null ? null : (object)((DateTime)propValue).ToString("YYYY-MM-DD")
+                                            : propValue == null ? null : (object)((DateTime)propValue).ToString("yyyy-MM-dd")
                             :
                                 prop.PropertyType == typeof(bool)
                                     ? propValue?.ToString().ToLowerInvariant()
@@ -253,6 +253,13 @@ namespace HubSpot.NET.Core.Requests
                 var updatedAtProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "updatedAt");
                 updatedAtProp?.SetValue(dto, updatedAtData);
             }
+            // DateUpdated
+            if (expandoDict.TryGetValue("isDeleted", out var isDeletedData))
+            {
+                // TODO use properly serialized name of prop to find it
+                var isDeletedProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "isDeleted");
+                isDeletedProp?.SetValue(dto, isDeletedData);
+            }
 
             // The Properties object in the json / response data contains all the props we wish to map - if that does not exist
             // we cannot proceeed
@@ -305,9 +312,9 @@ namespace HubSpot.NET.Core.Requests
                                 : (dynamicValue is string && long.TryParse((string)dynamicValue, out long dynamicLongValue)) && type == typeof(DateTime)
                                     ? new DateTime(1970, 1, 1).AddMilliseconds((long)dynamicLongValue)
                                     : (dynamicValue is string) && typeof(string[]) == type
-                                        ? Convert.ChangeType(((string)dynamicValue)?.Split(','), type)
+                                        ? Convert.ChangeType(((string)dynamicValue)?.Split(';'), type)
                                         : (dynamicValue is string) && (typeof(IList<string>).IsAssignableFrom(type) || typeof(IEnumerable<string>) == type)
-                                            ? Convert.ChangeType(((string)dynamicValue)?.Split(',').ToList(), type)
+                                            ? Convert.ChangeType(((string)dynamicValue)?.Split(';').ToList(), type)
                                             : Convert.ChangeType(dynamicValue, type);
                         targetProp.SetValue(dto, value);
                     }
