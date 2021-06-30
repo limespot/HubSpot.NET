@@ -37,9 +37,11 @@ namespace HubSpot.NET.Api.Company.Dto
         public string Country { get; set; }
 
         [DataMember(Name = "createdAt")]
+        [IgnoreDataMember]
         public DateTime? CreatedAt { get; set; }
 
         [DataMember(Name = "updatedAt")]
+        [IgnoreDataMember]
         public DateTime? UpdatedAt { get; set; }
 
         public string RouteBasePath => "/companies/v2";

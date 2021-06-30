@@ -51,6 +51,7 @@ namespace HubSpot.NET.Api.Deal.Dto
 
         [DataMember(Name = "createdate")]
         [LongDate]
+        [IgnoreDataMember]
         public DateTime? DateCreated { get; set; }
 
         [DataMember(Name = "isDeleted")]

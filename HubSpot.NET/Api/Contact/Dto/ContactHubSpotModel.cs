@@ -46,9 +46,11 @@ namespace HubSpot.NET.Api.Contact.Dto
         public long? OwnerId { get;set; }
 
         [DataMember(Name = "createdAt")]
+        [IgnoreDataMember]
         public DateTime? CreatedAt { get; set; }
 
         [DataMember(Name = "updatedAt")]
+        [IgnoreDataMember]
         public DateTime? UpdatedAt { get; set; }
 
         public string RouteBasePath => "/contacts/v1";
