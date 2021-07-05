@@ -18,6 +18,8 @@ namespace HubSpot.NET.Examples
              */
             var john = api.EmailSubscriptions.GetStatus("john@squaredup.com");
 
+            api.EmailSubscriptions.SubscribeTo("john@squaredup.com", all.Types.First().Id, "LEGITIMATE_INTEREST_CLIENT", "Signed Up.");
+
             /**
              * Unsubscribe a user from ALL emails
              * WARNING: You cannot undo this

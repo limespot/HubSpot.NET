@@ -72,5 +72,32 @@
 
             _client.Execute(path, model, Method.PUT, false);
         }
+
+
+        /// <summary>
+        /// Subscribe the given email address to the given subscription type
+        /// See <see cref="https://legacydocs.hubspot.com/docs/methods/email/update_status"/>
+        /// </summary>
+        public void SubscribeTo(string email, long id, string basis, string basisExplaination)
+        {
+            var model = new SubscribeHubSpotModel
+            {
+                SubscriptionStatuses = new List<SubscribeStatusHubSpotModel>()
+                {
+                    new SubscribeStatusHubSpotModel()
+                    {
+                        Id = id,
+                        Subscribed = true,
+                        OptState = "OPT_IN"
+                    }
+                },
+                SubscriptionLegalBasis = basis,
+                SubscriptionLegalBasisExplanation = basisExplaination
+            };
+
+            var path = $"{model.RouteBasePath}/{email}";
+
+            _client.Execute(path, model, Method.PUT, false);
+        }
     }
 }
