@@ -215,7 +215,7 @@ namespace HubSpot.NET.Core.Requests
             else if (dto is Api.Deal.Dto.DealHubSpotModel && expandoDict.TryGetValue("id", out dealIdData))
             {
                 // TODO use properly serialized name of prop to find it
-                var dealIdProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "dealId");
+                var dealIdProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "id");
                 long? dealIdValue = null;
                 if (dealIdData is string && dealIdData != null)
                     dealIdValue = Convert.ToInt64(dealIdData);
@@ -232,7 +232,7 @@ namespace HubSpot.NET.Core.Requests
             else if (dto is Api.Company.Dto.CompanyHubSpotModel && expandoDict.TryGetValue("id", out companyIdData))
             {
                 // TODO use properly serialized name of prop to find it
-                var companyIdProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "companyId");
+                var companyIdProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "id");
                 long? companyIdValue = null;
                 if (companyIdData is string && companyIdData != null)
                     companyIdValue = Convert.ToInt64(companyIdData);
