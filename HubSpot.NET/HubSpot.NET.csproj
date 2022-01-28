@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net46;net451;netstandard2.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.6.19.23</Version>
+		<Version>0.6.19.25</Version>
 		<Authors>cdmdotnet Limited - originally Squared Up Ltd.</Authors>
 		<Company>cdmdotnet Limited - originally Squared Up Ltd.</Company>
 		<Description>C# .NET Wrapper around the common HubSpot APIs. This is a fork/continuation of the original project that now appears not to be maintained.</Description>
@@ -15,7 +15,7 @@
 		<RepositoryUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</RepositoryUrl>
 		<PackageTags>hubspot api wrapper c# contact company deal engagement properties crm</PackageTags>
 		<PackageReleaseNotes>
-			0.6.19.23 Patching id fields being sent when searching Hubspot deals and companies
+			0.6.19.25 Patching id fields being sent when searching Hubspot deals and companies
 
 			0.6.19.22 Added HubSpot Icon to package.
 
