@@ -1,5 +1,6 @@
 ﻿using HubSpot.NET.Api.Company;
 using HubSpot.NET.Api.Contact;
+using HubSpot.NET.Api.ContactList;
 using HubSpot.NET.Api.Deal;
 using HubSpot.NET.Api.EmailSubscriptions;
 using HubSpot.NET.Api.Engagement;
@@ -22,6 +23,7 @@ namespace HubSpot.NET.Core
         public IHubSpotCosFileApi File { get; }
         public IHubSpotOwnerApi Owner { get; }
         public IHubSpotCompanyPropertiesApi CompanyProperties { get; }
+        public IHubSpotContactListApi ContactLists { get; }
 
         public IHubSpotEmailSubscriptionsApi EmailSubscriptions { get; }
 
@@ -37,6 +39,7 @@ namespace HubSpot.NET.Core
             Owner = new HubSpotOwnerApi(client);
             CompanyProperties = new HubSpotCompaniesPropertiesApi(client);
             EmailSubscriptions = new HubSpotEmailSubscriptionsApi(client);
+            ContactLists = new HubSpotContactListApi(client);
         }
 
     }
