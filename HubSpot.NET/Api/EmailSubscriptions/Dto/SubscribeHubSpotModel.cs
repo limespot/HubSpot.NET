@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using HubSpot.NET.Core.Interfaces;
 
@@ -6,17 +7,44 @@ namespace HubSpot.NET.Api.EmailSubscriptions.Dto
 {
     public class SubscribeHubSpotModel : IHubSpotModel
     {
+        
         [DataMember(Name = "portalSubscriptionLegalBasis")]
-        public string SubscriptionLegalBasis { get;set; }
+        public string PortalSubscriptionLegalBasis { get;set; }
 
         [DataMember(Name = "portalSubscriptionLegalBasisExplanation")]
-        public string SubscriptionLegalBasisExplanation { get; set; }
+        public string PortalSubscriptionLegalBasisExplanation { get; set; }
+        
+        [IgnoreDataMember]
+        [Obsolete]
+        public string SubscriptionLegalBasis {
+            get
+            {
+                return PortalSubscriptionLegalBasis;
+            }
+            set
+            {
+                PortalSubscriptionLegalBasis = value;
+            }
+        }
+
+        [IgnoreDataMember]
+        [Obsolete]
+        public string SubscriptionLegalBasisExplanation {
+            get
+            {
+                return PortalSubscriptionLegalBasisExplanation;
+            }
+            set
+            {
+                PortalSubscriptionLegalBasisExplanation = value;
+            }
+        }
 
         [DataMember(Name = "subscriptionStatuses")]
         public List<SubscribeStatusHubSpotModel> SubscriptionStatuses { get; set; }
 
         [IgnoreDataMember]
-        public bool IsNameValue { get; }
+        public bool IsNameValue => true;
 
         public void ToHubSpotDataEntity(ref dynamic dataEntity)
         {

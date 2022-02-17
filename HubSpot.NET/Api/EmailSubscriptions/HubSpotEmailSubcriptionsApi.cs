@@ -127,8 +127,8 @@ namespace HubSpot.NET.Api.EmailSubscriptions
             };
             if (setPortalSubscriptionBasis)
             {
-                model.SubscriptionLegalBasis = basis;
-                model.SubscriptionLegalBasisExplanation = basisExplanation;
+                model.PortalSubscriptionLegalBasis = basis;
+                model.PortalSubscriptionLegalBasisExplanation = basisExplanation;
             }
 
             var path = $"{model.RouteBasePath}/{email}";
