@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using HubSpot.NET.Core.Interfaces;
 
 namespace HubSpot.NET.Api.EmailSubscriptions.Dto
@@ -19,6 +15,7 @@ namespace HubSpot.NET.Api.EmailSubscriptions.Dto
         [DataMember(Name = "subscriptionStatuses")]
         public List<SubscribeStatusHubSpotModel> SubscriptionStatuses { get; set; }
 
+        [IgnoreDataMember]
         public bool IsNameValue { get; }
 
         public void ToHubSpotDataEntity(ref dynamic dataEntity)
@@ -29,6 +26,8 @@ namespace HubSpot.NET.Api.EmailSubscriptions.Dto
         {
         }
 
+        [IgnoreDataMember]
         public string RouteBasePath => "/email/public/v1/subscriptions";
     }
+
 }

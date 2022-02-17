@@ -1,14 +1,25 @@
-﻿namespace HubSpot.NET.Api.EmailSubscriptions
+namespace HubSpot.NET.Api.EmailSubscriptions
 {
     using System.Collections.Generic;
     using HubSpot.NET.Api.EmailSubscriptions.Dto;
     using HubSpot.NET.Core.Interfaces;
     using RestSharp;
 
+    /// <summary>
+    /// The hub spot email subscriptions api class
+    /// </summary>
+    /// <seealso cref="IHubSpotEmailSubscriptionsApi"/>
     public class HubSpotEmailSubscriptionsApi : IHubSpotEmailSubscriptionsApi
     {
+        /// <summary>
+        /// The client
+        /// </summary>
         private readonly IHubSpotClient _client;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HubSpotEmailSubscriptionsApi"/> class
+        /// </summary>
+        /// <param name="client">The client</param>
         public HubSpotEmailSubscriptionsApi(IHubSpotClient client)
         {
             _client = client;
@@ -58,7 +69,7 @@
         {
             var path = $"{new SubscriptionTypeListHubSpotModel().RouteBasePath}/subscriptions/{email}";
 
-            var model = new SubscriptionStatusHubSpotModel
+            var model = new SubscriptionStatusUpdateHubSpotModel
             {
                 SubscriptionStatuses = new List<SubscriptionStatusDetailHubSpotModel>()
                 {
@@ -74,26 +85,51 @@
         }
 
 
+
         /// <summary>
         /// Subscribe the given email address to the given subscription type
         /// See <see cref="https://legacydocs.hubspot.com/docs/methods/email/update_status"/>
-        /// </summary>
-        public void SubscribeTo(string email, long id, string basis, string basisExplaination)
+        /// </summary>        /// <param name="email">The email</param>
+        /// <param name="id">The id</param>
+        /// <param name="basis">The basis</param>
+        /// <param name="basisExplanation">The basis explanation</param>
+        /// <param name="setPortalSubscriptionBasis">The set portal subscription basis</param>
+        /// <param name="setSubscriptionBasis">The set subscription basis</param>
+        /// <param name="subscriptionBasis">The subscription basis</param>
+        /// <param name="subscriptionBasisExplanation">The subscription basis explanation</param>
+        public void SubscribeTo(string email, long id, string basis, string basisExplanation, bool setPortalSubscriptionBasis = true, bool setSubscriptionBasis = false, string subscriptionBasis = null, string subscriptionBasisExplanation = null)
         {
+            var subscription = new SubscribeStatusHubSpotModel()
+            {
+                Id = id,
+                Subscribed = true,
+                OptState = "OPT_IN"
+            };
+            if (setSubscriptionBasis)
+            {
+                if (string.IsNullOrEmpty(subscriptionBasis))
+                {
+                    subscriptionBasis = basis;
+                }
+
+                if (subscriptionBasisExplanation == null)
+                {
+                    subscriptionBasisExplanation = basisExplanation;
+                }
+
+                subscription.LegalBasis = subscriptionBasis;
+                subscription.LegalBasisExplanation = subscriptionBasisExplanation;
+            }
+
             var model = new SubscribeHubSpotModel
             {
-                SubscriptionStatuses = new List<SubscribeStatusHubSpotModel>()
-                {
-                    new SubscribeStatusHubSpotModel()
-                    {
-                        Id = id,
-                        Subscribed = true,
-                        OptState = "OPT_IN"
-                    }
-                },
-                SubscriptionLegalBasis = basis,
-                SubscriptionLegalBasisExplanation = basisExplaination
+                SubscriptionStatuses = new List<SubscribeStatusHubSpotModel>() { subscription }
             };
+            if (setPortalSubscriptionBasis)
+            {
+                model.SubscriptionLegalBasis = basis;
+                model.SubscriptionLegalBasisExplanation = basisExplanation;
+            }
 
             var path = $"{model.RouteBasePath}/{email}";
 
