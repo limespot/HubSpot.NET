@@ -15,5 +15,9 @@ namespace HubSpot.NET.Core.Interfaces
         ContactListUpdateResponseModel AddContactsToList(long listId, IEnumerable<long> contactIds);
 
         ContactListUpdateResponseModel RemoveContactsFromList(long listId, IEnumerable<long> contactIds);
+
+        void DeleteContactList(long listId);
+
+        ContactListModel CreateStaticContactList(string contactListName);
     }
 }
