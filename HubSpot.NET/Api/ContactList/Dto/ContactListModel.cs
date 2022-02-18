@@ -17,6 +17,9 @@ namespace HubSpot.NET.Api.ContactList.Dto
 
         [DataMember(Name = "dynamic")]
         public bool Dynamic { get; set; }
+        
+        [DataMember(Name = "metadata")]
+        public dynamic Metadata { get; set; }
 
         [IgnoreDataMember]
         public bool IsNameValue => true;
@@ -32,4 +35,5 @@ namespace HubSpot.NET.Api.ContactList.Dto
         [IgnoreDataMember]
         public string RouteBasePath => "/contacts/v1/lists";
     }
+    
 }
