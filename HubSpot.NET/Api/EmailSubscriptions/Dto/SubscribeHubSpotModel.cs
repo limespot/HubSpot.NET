@@ -15,7 +15,7 @@ namespace HubSpot.NET.Api.EmailSubscriptions.Dto
         public string PortalSubscriptionLegalBasisExplanation { get; set; }
         
         [IgnoreDataMember]
-        [Obsolete]
+        [Obsolete( "This property is obsolete. Use PortalSubscriptionLegalBasis instead.",false)]
         public string SubscriptionLegalBasis {
             get
             {
@@ -28,7 +28,7 @@ namespace HubSpot.NET.Api.EmailSubscriptions.Dto
         }
 
         [IgnoreDataMember]
-        [Obsolete]
+        [Obsolete( "This property is obsolete. Use PortalSubscriptionLegalBasisExplanation instead.",false)]
         public string SubscriptionLegalBasisExplanation {
             get
             {
