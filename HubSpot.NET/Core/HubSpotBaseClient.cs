@@ -23,7 +23,9 @@ namespace HubSpot.NET.Core
 
         public T Execute<T>(string absoluteUriPath, object entity = null, Method method = Method.GET, bool convertToPropertiesSchema = true) where T : IHubSpotModel, new()
         {
-            string json = entity == null ? null : _serializer.SerializeEntity(entity, convertToPropertiesSchema);
+            string json = (method == Method.GET || entity == null)
+                ? null
+                : _serializer.SerializeEntity(entity, convertToPropertiesSchema);
 
             var data = SendRequest(absoluteUriPath, method, json, responseData => (T)_serializer.DeserializeEntity<T>(responseData, convertToPropertiesSchema));
 
@@ -39,7 +41,9 @@ namespace HubSpot.NET.Core
 
         public void Execute(string absoluteUriPath, object entity = null, Method method = Method.GET, bool convertToPropertiesSchema = true)
         {
-            string json = entity == null ? null : _serializer.SerializeEntity(entity, convertToPropertiesSchema);
+            string json = (method == Method.GET || entity == null)
+                ? null
+                : _serializer.SerializeEntity(entity, convertToPropertiesSchema);
             
             SendRequest(absoluteUriPath, method, json);
         }
@@ -47,7 +51,9 @@ namespace HubSpot.NET.Core
         public void ExecuteBatch(string absoluteUriPath, List<object> entities, Method method = Method.GET,
             bool convertToPropertiesSchema = true)
         {
-            string json = entities == null ? null : _serializer.SerializeEntity(entities, convertToPropertiesSchema);
+            string json = (method == Method.GET || entities == null)
+                ? null
+                : _serializer.SerializeEntity(entities, convertToPropertiesSchema);
 
             SendRequest(absoluteUriPath, method, json);
         }
@@ -79,7 +85,9 @@ namespace HubSpot.NET.Core
 
         public T ExecuteList<T>(string absoluteUriPath, object entity = null, Method method = Method.GET, bool convertToPropertiesSchema = true) where T : IHubSpotModel, new()
         {
-            string json = entity == null ? null : _serializer.SerializeEntity(entity);
+            string json = (method == Method.GET || entity == null)
+                ? null
+                : _serializer.SerializeEntity(entity);
 
             var data = SendRequest(
                 absoluteUriPath,
@@ -107,7 +115,7 @@ namespace HubSpot.NET.Core
 
             var request = new RestRequest(url, method);
 
-            if (!string.IsNullOrWhiteSpace(json))
+            if (method != Method.GET && !string.IsNullOrWhiteSpace(json))
             {
                 request.AddParameter("application/json", json, ParameterType.RequestBody);
             }
