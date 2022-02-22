@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using HubSpot.NET.Core.Interfaces;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Converters;
 
 namespace HubSpot.NET.Core.Requests
 {
@@ -21,6 +22,7 @@ namespace HubSpot.NET.Core.Requests
             _jsonSerializerSettings = new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                Converters = new List<JsonConverter> { new StringEnumConverter() },
                 NullValueHandling = NullValueHandling.Ignore
             };
         }

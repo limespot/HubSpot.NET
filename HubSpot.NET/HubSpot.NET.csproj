@@ -3,18 +3,22 @@
 	<PropertyGroup>
 		<TargetFrameworks>net46;net451;netstandard2.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.6.19.25</Version>
-		<Authors>cdmdotnet Limited - originally Squared Up Ltd.</Authors>
-		<Company>cdmdotnet Limited - originally Squared Up Ltd.</Company>
-		<Description>C# .NET Wrapper around the common HubSpot APIs. This is a fork/continuation of the original project that now appears not to be maintained.</Description>
-		<Copyright>2021 cdmdotnet Limited - originally Squared Up Ltd.</Copyright>
+		<Version>0.6.20.01</Version>
+		<Authors>Chinchilla Software Limited</Authors>
+		<Company>Chinchilla Software Limited</Company>
+		<Description>C# .NET Wrapper around the common HubSpot APIs.</Description>
+		<Copyright>2021 Chinchilla Software Limited.</Copyright>
 		<!--
-    <PackageLicenseUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET/blob/master/LICENSE</PackageLicenseUrl>
-    -->
+		<PackageLicenseUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET/blob/master/LICENSE</PackageLicenseUrl>
+		-->
 		<PackageProjectUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</RepositoryUrl>
 		<PackageTags>hubspot api wrapper c# contact company deal engagement properties crm</PackageTags>
 		<PackageReleaseNotes>
+			0.6.20.1 Minor breaking change. The search operator string has been replaced with an enum.
+			Patched Paging model not being properly deserialised when searching - Thanks to https://github.com/hakimio for spotting this as issue 8 (https://github.com/Chinchilla-Software-Com/HubSpot.NET/issues/8).
+			Merged PR #7 (https://github.com/Chinchilla-Software-Com/HubSpot.NET/pull/7) to patch some bugs in Feature/email subscriptions - Thanks to https://github.com/lakesol for spotting these and contributing.
+
 			0.6.19.25 Patching id fields being sent when searching Hubspot deals and companies
 
 			0.6.19.22 Added HubSpot Icon to package.
@@ -51,7 +55,7 @@
 
 			0.6.19.1 Added ability to search for deals using v3 API with a patch for .NET Standard
 		</PackageReleaseNotes>
-		<PackageId>_SquaredUp.HubSpot.NET</PackageId>
+		<PackageId>Chinchilla.HubSpot.NET</PackageId>
 	</PropertyGroup>
 
 	<PropertyGroup>

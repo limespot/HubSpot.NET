@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
+using HubSpot.NET.Api;
 using HubSpot.NET.Core.Attributes;
 using HubSpot.NET.Core.Extensions;
 using HubSpot.NET.Core.Interfaces;
@@ -259,6 +260,23 @@ namespace HubSpot.NET.Core.Requests
                 // TODO use properly serialized name of prop to find it
                 var isDeletedProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "isDeleted");
                 isDeletedProp?.SetValue(dto, isDeletedData);
+            }
+
+
+            if (dto is PagingModel && expandoDict.TryGetValue("next", out var nextData))
+            {
+                // TODO use properly serialized name of prop to find it
+                var nextProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "next");
+
+                var expandoEntry = nextData as ExpandoObject;
+                var nextDto = ConvertSingleEntity(expandoEntry, Activator.CreateInstance(nextProp.PropertyType));
+                nextProp?.SetValue(dto, nextDto);
+            }
+            else if (dto is NextModel && expandoDict.TryGetValue("after", out var afterData))
+            {
+                // TODO use properly serialized name of prop to find it
+                var afterProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "after");
+                afterProp?.SetValue(dto, afterData);
             }
 
             // The Properties object in the json / response data contains all the props we wish to map - if that does not exist
