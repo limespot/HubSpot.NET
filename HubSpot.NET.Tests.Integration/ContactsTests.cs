@@ -43,7 +43,7 @@ namespace HubSpot.NET.Tests.Integration
 				// Assert
 				Assert.AreEqual(5, results.Total, "Did not identify a total of 5 results.");
 				Assert.AreEqual(3, results.Contacts.Count, "Did not return 3 of the 5 results.");
-				Assert.AreEqual(false, results.Contacts.Any(c => string.IsNullOrWhiteSpace(c.Email)), "Some contact do not have email addresses.");
+				Assert.AreEqual(false, results.Contacts.Any(c => string.IsNullOrWhiteSpace(c.Email)), "Some contacts do not have email addresses.");
 				Assert.AreEqual($"User 1", results.Contacts[0].LastName, $"Last Name '{results.Contacts[0].LastName}' did not match User 1.");
 				Assert.AreEqual($"User 2", results.Contacts[1].LastName, $"Last Name '{results.Contacts[1].LastName}' did not match User 2.");
 				Assert.AreEqual($"User 3", results.Contacts[2].LastName, $"Last Name '{results.Contacts[2].LastName}' did not match User 3.");
@@ -55,7 +55,7 @@ namespace HubSpot.NET.Tests.Integration
 
 				Assert.AreEqual(5, results.Total, "Did not identify a total of 5 results.");
 				Assert.AreEqual(2, results.Contacts.Count, "Did not return 2 of the 5 results.");
-				Assert.AreEqual(false, results.Contacts.Any(c => string.IsNullOrWhiteSpace(c.Email)), "Some contact do not have email addresses.");
+				Assert.AreEqual(false, results.Contacts.Any(c => string.IsNullOrWhiteSpace(c.Email)), "Some contacts do not have email addresses.");
 				Assert.AreEqual($"User 4", results.Contacts[0].LastName, $"Last Name '{results.Contacts[0].LastName}' did not match User 4.");
 				Assert.AreEqual($"User 5", results.Contacts[1].LastName, $"Last Name '{results.Contacts[1].LastName}' did not match User 5.");
 			}
@@ -87,7 +87,7 @@ namespace HubSpot.NET.Tests.Integration
 			}
 
 			// HubSpot is rather slow to update the list... wait 10 seconds to allow it to catch up
-			System.Threading.Thread.Sleep(10);
+			System.Threading.Thread.Sleep(10 * 1000);
 
 			try
 			{
@@ -102,7 +102,7 @@ namespace HubSpot.NET.Tests.Integration
 				// Assert
 				Assert.IsTrue(results.MoreResultsAvailable, "Did not identify more results are available.");
 				Assert.AreEqual(3, results.Contacts.Count, "Did not return 3 of the 5 results.");
-				Assert.AreEqual(false, results.Contacts.Any(c => string.IsNullOrWhiteSpace(c.Email)), "Some contact do not have email addresses.");
+				Assert.AreEqual(false, results.Contacts.Any(c => string.IsNullOrWhiteSpace(c.Email)), "Some contacts do not have email addresses.");
 				Assert.AreNotEqual(0, results.ContinuationOffset);
 
 				// Second Act
@@ -111,7 +111,7 @@ namespace HubSpot.NET.Tests.Integration
 
 				Assert.IsFalse(results2.MoreResultsAvailable, "Did not identify at the end of results.");
 				Assert.AreEqual(2, results2.Contacts.Count, "Did not return 2 of the 5 results.");
-				Assert.AreEqual(false, results2.Contacts.Any(c => string.IsNullOrWhiteSpace(c.Email)), "Some contact do not have email addresses.");
+				Assert.AreEqual(false, results2.Contacts.Any(c => string.IsNullOrWhiteSpace(c.Email)), "Some contacts do not have email addresses.");
 			}
 			finally
 			{
@@ -150,7 +150,7 @@ namespace HubSpot.NET.Tests.Integration
 			}
 
 			// HubSpot is rather slow to update the list... wait 10 seconds to allow it to catch up
-			System.Threading.Thread.Sleep(10);
+			System.Threading.Thread.Sleep(10 * 1000);
 
 			try
 			{
@@ -165,7 +165,7 @@ namespace HubSpot.NET.Tests.Integration
 				// Assert
 				Assert.IsTrue(results.MoreResultsAvailable, "Did not identify more results are available.");
 				Assert.AreEqual(2, results.Contacts.Count, "Did not return 3 of the 5 results.");
-				Assert.AreEqual(false, results.Contacts.Any(c => string.IsNullOrWhiteSpace(c.Email)), "Some contact do not have email addresses.");
+				Assert.AreEqual(false, results.Contacts.Any(c => string.IsNullOrWhiteSpace(c.Email)), "Some contacts do not have email addresses.");
 				Assert.AreNotEqual(0, results.ContinuationOffset);
 
 				// Cannot actually test recently updated as recently created polutes the results.
