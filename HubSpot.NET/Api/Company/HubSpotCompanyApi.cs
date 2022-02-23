@@ -4,9 +4,9 @@ namespace HubSpot.NET.Api.Company
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using Flurl;
     using HubSpot.NET.Api.Company.Dto;
     using HubSpot.NET.Core;
+    using HubSpot.NET.Core.Extensions;
     using HubSpot.NET.Core.Interfaces;
     using RestSharp;
 
@@ -93,12 +93,12 @@ namespace HubSpot.NET.Api.Company
                 .SetQueryParam("count", opts.Limit);
 
             if (opts.PropertiesToInclude.Any())
-                path.SetQueryParam("properties", opts.PropertiesToInclude);
+                path = path.SetQueryParam("properties", opts.PropertiesToInclude);
 
             if (opts.Offset.HasValue)
                 path = path.SetQueryParam("offset", opts.Offset);
 
-            var data = _client.ExecuteList<CompanyListHubSpotModel<T>>(path);
+			CompanyListHubSpotModel<T> data = _client.ExecuteList<CompanyListHubSpotModel<T>>(path);
 
             return data;
         }
@@ -116,7 +116,7 @@ namespace HubSpot.NET.Api.Company
 
             var path = $"{entity.RouteBasePath}/companies/{entity.Id}";
 
-            var data = _client.Execute<T>(path, entity, Method.PUT);
+            T data = _client.Execute<T>(path, entity, Method.PUT);
 
             return data;
         }
@@ -139,7 +139,7 @@ namespace HubSpot.NET.Api.Company
 
             var path = "/crm/v3/objects/companies/search";
 
-            var data = _client.ExecuteList<CompanySearchHubSpotModel<T>>(path, opts, Method.POST);
+			CompanySearchHubSpotModel<T> data = _client.ExecuteList<CompanySearchHubSpotModel<T>>(path, opts, Method.POST);
 
             return data;
         }

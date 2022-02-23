@@ -8,7 +8,7 @@ namespace HubSpot.NET.Tests.Integration
 	[TestClass]
 	public class OAuthTests
 	{
-		[TestMethod]
+//		[TestMethod]
 		public void Authorize()
 		{
 			// Arrange

@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-	using System.Reflection;
-	using System.Runtime.Serialization;
-	using Flurl;
+    using System.Reflection;
+    using System.Runtime.Serialization;
     using HubSpot.NET.Api.Contact.Dto;
     using HubSpot.NET.Core;
+    using HubSpot.NET.Core.Extensions;
     using HubSpot.NET.Core.Interfaces;
     using RestSharp;
 
@@ -58,7 +58,7 @@
 
             try
             {
-                var data = _client.Execute<T>(path, Method.GET);
+                T data = _client.Execute<T>(path, Method.GET);
                 return data;
              }
             catch (HubSpotException exception)
@@ -81,7 +81,7 @@
 
             try
             {
-                var data = _client.Execute<T>(path, Method.GET);
+                T data = _client.Execute<T>(path, Method.GET);
                 return data;
              }
             catch (HubSpotException exception)
@@ -104,7 +104,7 @@
 
             try
             {
-                var data = _client.Execute<T>(path, Method.GET);
+                T data = _client.Execute<T>(path, Method.GET);
                 return data;
             }
             catch (HubSpotException exception)
@@ -125,24 +125,18 @@
         public ContactListHubSpotModel<T> List<T>(ListRequestOptions opts = null) where T : ContactHubSpotModel, new()
         {
             if (opts == null)
-            {
                 opts = new ListRequestOptions();
-            }
 
             var path = $"{new ContactHubSpotModel().RouteBasePath}/lists/all/contacts/all"
                 .SetQueryParam("count", opts.Limit);
 
             if (opts.PropertiesToInclude.Any())
-            {
-                path.SetQueryParam("property", opts.PropertiesToInclude);
-            }
+                path = path.SetQueryParam("property", opts.PropertiesToInclude);
 
             if (opts.Offset.HasValue)
-            {
                 path = path.SetQueryParam("vidOffset", opts.Offset);
-            }
 
-            var data = _client.ExecuteList<ContactListHubSpotModel<T>>(path);
+			ContactListHubSpotModel<T> data = _client.ExecuteList<ContactListHubSpotModel<T>>(path);
 
             return data;
         }
@@ -155,9 +149,7 @@
         public void Update<T>(T contact) where T : ContactHubSpotModel, new()
         {
             if (contact.Id < 1)
-            {
                 throw new ArgumentException("Contact entity must have an id set!");
-            }
 
             var path = $"{contact.RouteBasePath}/contact/vid/{contact.Id}/profile";
 
@@ -200,7 +192,7 @@
                 .SetQueryParam("count", opts.Limit);
 
             if (opts.PropertiesToInclude.Any())
-                path.SetQueryParam("property", opts.PropertiesToInclude);
+                path = path.SetQueryParam("property", opts.PropertiesToInclude);
 
             if (opts.Offset.HasValue)
                 path = path.SetQueryParam("vidOffset", opts.Offset);
@@ -213,8 +205,8 @@
             path = path.SetQueryParam("formSubmissionMode", opts.FormSubmissionMode);
             
             path = path.SetQueryParam("showListMemberships", opts.ShowListMemberships);
-            
-            var data = _client.ExecuteList<ContactListHubSpotModel<T>>(path, opts);
+
+			ContactListHubSpotModel<T> data = _client.ExecuteList<ContactListHubSpotModel<T>>(path, opts);
 
             return data;
         }
@@ -230,7 +222,7 @@
                 .SetQueryParam("count", opts.Limit);
 
             if (opts.PropertiesToInclude.Any())
-                path.SetQueryParam("property", opts.PropertiesToInclude);
+                path = path.SetQueryParam("property", opts.PropertiesToInclude);
 
             if (opts.Offset != null)
                 path = path.SetQueryParam("offset", opts.Offset);
@@ -239,11 +231,11 @@
             {
                 path = path.SetQueryParam("sort", opts.SortBy);
 
-				Type enumType = typeof(SortingOrderType);
-				MemberInfo[] memberInfos = enumType.GetMember(opts.Order.ToString());
-				MemberInfo enumValueMemberInfo = memberInfos.FirstOrDefault(m => m.DeclaringType == enumType);
-				object[] valueAttributes = enumValueMemberInfo.GetCustomAttributes(typeof(EnumMemberAttribute), false);
-				string description = ((EnumMemberAttribute)valueAttributes[0]).Value;
+                Type enumType = typeof(SortingOrderType);
+                MemberInfo[] memberInfos = enumType.GetMember(opts.Order.ToString());
+                MemberInfo enumValueMemberInfo = memberInfos.FirstOrDefault(m => m.DeclaringType == enumType);
+                object[] valueAttributes = enumValueMemberInfo.GetCustomAttributes(typeof(EnumMemberAttribute), false);
+                string description = ((EnumMemberAttribute)valueAttributes[0]).Value;
 
                 path = path.SetQueryParam("order", description);
             }
@@ -265,7 +257,7 @@
                 .SetQueryParam("count", opts.Limit);
 
             if (opts.PropertiesToInclude.Any())
-                path.SetQueryParam("property", opts.PropertiesToInclude);
+                path = path.SetQueryParam("property", opts.PropertiesToInclude);
 
             if (opts.Offset.HasValue)
                 path = path.SetQueryParam("vidOffset", opts.Offset);
@@ -278,8 +270,8 @@
             path = path.SetQueryParam("formSubmissionMode", opts.FormSubmissionMode);
             
             path = path.SetQueryParam("showListMemberships", opts.ShowListMemberships);
-            
-            var data = _client.ExecuteList<ContactListHubSpotModel<T>>(path, opts);
+
+			ContactListHubSpotModel<T> data = _client.ExecuteList<ContactListHubSpotModel<T>>(path, opts);
 
             return data;
         }

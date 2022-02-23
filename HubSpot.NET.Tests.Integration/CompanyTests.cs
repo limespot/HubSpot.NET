@@ -66,7 +66,7 @@ namespace HubSpot.NET.Tests.Integration
 				// Assert
 				Assert.AreNotEqual(sampleCompany.Domain, company.Domain);
 				Assert.AreNotEqual(sampleCompany.Name, company.Name);
-				Assert.AreEqual(20000, company.Domain);
+				Assert.AreEqual("sampledomain2.com", company.Domain);
 				Assert.AreEqual("Updated Company #1", company.Name);
 
 				// Second Act
@@ -185,6 +185,9 @@ namespace HubSpot.NET.Tests.Integration
 
 				sampleCompanys.Add(company);
 			}
+
+			// HubSpot is rather slow to update... wait 5 seconds to allow it to catch up
+			System.Threading.Thread.Sleep(5 * 1000);
 
 			try
 			{

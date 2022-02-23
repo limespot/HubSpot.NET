@@ -1,7 +1,7 @@
 namespace HubSpot.NET.Api.Owner
 {
-	using Flurl;
-	using HubSpot.NET.Api.Owner.Dto;
+    using HubSpot.NET.Api.Owner.Dto;
+    using HubSpot.NET.Core.Extensions;
     using HubSpot.NET.Core.Interfaces;
 
     public class HubSpotOwnerApi : IHubSpotOwnerApi
@@ -23,7 +23,7 @@ namespace HubSpot.NET.Api.Owner
             string path = $"{new OwnerHubSpotModel().RouteBasePath}/owners";
 
             if (opts != null)
-			{
+            {
                 if (opts.IncludeInactive)
                     path = path.SetQueryParam("includeInactive", "true");
                 if (!string.IsNullOrWhiteSpace(opts.EmailAddress))

@@ -20,6 +20,7 @@
 			Added sorting to searching contacts
 			Added ability to include inactive owners when calling for all owners
 			Added ability to filter owners by email address when calling for all owners
+			Removed dependency on Flurl.
 		</PackageReleaseNotes>
 		<PackageId>Chinchilla.HubSpot.NET</PackageId>
 	</PropertyGroup>
@@ -53,7 +54,6 @@
 	  <Compile Remove="Api\Company\Dto\SearchRequestFilterGroup.cs" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Flurl" Version="2.6.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
 	</ItemGroup>
 	<ItemGroup Condition=" '$(TargetFramework)' == 'NET46' ">
