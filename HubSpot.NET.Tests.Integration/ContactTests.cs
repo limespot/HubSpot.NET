@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace HubSpot.NET.Tests.Integration
 {
 	[TestClass]
-	public class ContactsTests
+	public class ContactTests
 	{
 		[TestMethod]
 		public void Search_5SamplesLimitedTo3WitContinuations_ReturnsCollectionWith3ItemsWithContinuationDetails()

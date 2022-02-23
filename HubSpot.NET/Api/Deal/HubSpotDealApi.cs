@@ -171,27 +171,19 @@
         {
 
             if (opts == null)
-            {
                 opts = new DealRecentRequestOptions();
-            }
 
             var path = $"{new DealRecentListHubSpotModel<T>().RouteBasePath}/deal/recent/created"
-                .SetQueryParam("limit", opts.Limit);
+                .SetQueryParam("count", opts.Limit);
 
             if (opts.Offset.HasValue)
-            {
                 path = path.SetQueryParam("offset", opts.Offset);
-            }
 
             if (opts.IncludePropertyVersion)
-            {
                 path = path.SetQueryParam("includePropertyVersions", "true");
-            }
 
             if (!string.IsNullOrEmpty(opts.Since))
-            {
                 path = path.SetQueryParam("since", opts.Since);
-            }
 
             var data = _client.ExecuteList<DealRecentListHubSpotModel<T>>(path);
 
@@ -207,27 +199,19 @@
         public DealRecentListHubSpotModel<T> RecentlyUpdated<T>(DealRecentRequestOptions opts = null) where T : DealHubSpotModel, new()
         {
             if (opts == null)
-            {
                 opts = new DealRecentRequestOptions();
-            }
 
             var path = $"{new DealRecentListHubSpotModel<T>().RouteBasePath}/deal/recent/modified"
-                .SetQueryParam("limit", opts.Limit);
+                .SetQueryParam("count", opts.Limit);
 
             if (opts.Offset.HasValue)
-            {
                 path = path.SetQueryParam("offset", opts.Offset);
-            }
 
             if (opts.IncludePropertyVersion)
-            {
                 path = path.SetQueryParam("includePropertyVersions", "true");
-            }
 
             if (!string.IsNullOrEmpty(opts.Since))
-            {
                 path = path.SetQueryParam("since", opts.Since);
-            }
 
             var data = _client.ExecuteList<DealRecentListHubSpotModel<T>>(path);
 

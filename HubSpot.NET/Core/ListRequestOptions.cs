@@ -38,6 +38,8 @@ namespace HubSpot.NET.Core
         public ListRequestOptions(int upperLimit)
         {
             _upperLimit = upperLimit;
+            if (_limit > upperLimit)
+                _limit = upperLimit;
         }
 
         /// <summary>

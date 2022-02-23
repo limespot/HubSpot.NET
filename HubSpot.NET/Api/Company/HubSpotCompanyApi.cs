@@ -65,16 +65,14 @@ namespace HubSpot.NET.Api.Company
         public CompanySearchResultModel<T> GetByDomain<T>(string domain, CompanySearchByDomain options = null) where T : CompanyHubSpotModel, new()
         {
             if (options == null)
-            {
                 options = new CompanySearchByDomain();
-            }
 
             var path =  $"{new CompanyHubSpotModel().RouteBasePath}/domains/{domain}/companies";
 
             try
             {
 
-                var data = _client.ExecuteList<CompanySearchResultModel<T>>(path, options, Method.POST);
+                CompanySearchResultModel<T> data = _client.ExecuteList<CompanySearchResultModel<T>>(path, options, Method.POST);
 
                 return data;
              }
@@ -89,22 +87,16 @@ namespace HubSpot.NET.Api.Company
         public CompanyListHubSpotModel<T> List<T>(ListRequestOptions opts = null) where T: CompanyHubSpotModel, new()
         {
             if (opts == null)
-            {
                 opts = new ListRequestOptions();
-            }
 
             var path = $"{new CompanyHubSpotModel().RouteBasePath}/companies/paged"
                 .SetQueryParam("count", opts.Limit);
 
             if (opts.PropertiesToInclude.Any())
-            {
                 path.SetQueryParam("properties", opts.PropertiesToInclude);
-            }
 
             if (opts.Offset.HasValue)
-            {
                 path = path.SetQueryParam("offset", opts.Offset);
-            }
 
             var data = _client.ExecuteList<CompanyListHubSpotModel<T>>(path);
 
@@ -120,9 +112,7 @@ namespace HubSpot.NET.Api.Company
         public T Update<T>(T entity) where T : CompanyHubSpotModel, new()
         {
             if (entity.Id < 1)
-            {
                 throw new ArgumentException("Company entity must have an id set!");
-            }
 
             var path = $"{entity.RouteBasePath}/companies/{entity.Id}";
 
@@ -145,9 +135,7 @@ namespace HubSpot.NET.Api.Company
         public CompanySearchHubSpotModel<T> Search<T>(SearchRequestOptions opts = null) where T : CompanyHubSpotModel, new()
         {
             if (opts == null)
-            {
                 opts = new SearchRequestOptions();
-            }
 
             var path = "/crm/v3/objects/companies/search";
 

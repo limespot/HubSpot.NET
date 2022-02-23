@@ -1,13 +1,13 @@
+using System.Linq;
+
 using HubSpot.NET.Api.Owner;
 using HubSpot.NET.Api.Owner.Dto;
-using HubSpot.NET.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 
 namespace HubSpot.NET.Tests.Integration
 {
 	[TestClass]
-	public class OwnersTests
+	public class OwnerTests
 	{
 		// [TestMethod]
 		public void GetAll_NoOptions_ReturnsNonZeroCollection()
