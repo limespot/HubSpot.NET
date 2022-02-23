@@ -16,6 +16,9 @@
 		<PackageTags>hubspot api wrapper c# contact company deal engagement properties crm</PackageTags>
 		<PackageReleaseNotes>
 			1.0.0.1 - Adds OAuth to 0.6.20.1
+			Added sorting to searching contacts
+			Added ability to include inactive owners when calling for all owners
+			Added ability to filter owners by email address when calling for all owners
 		</PackageReleaseNotes>
 		<PackageId>Chinchilla.HubSpot.NET</PackageId>
 	</PropertyGroup>

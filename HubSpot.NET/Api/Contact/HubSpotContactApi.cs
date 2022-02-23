@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using Flurl;
+	using System.Reflection;
+	using System.Runtime.Serialization;
+	using Flurl;
     using HubSpot.NET.Api.Contact.Dto;
     using HubSpot.NET.Core;
     using HubSpot.NET.Core.Interfaces;
@@ -189,33 +191,22 @@
         /// <summary>
         /// Get recently updated (or created) contacts
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="opts">Request options</param>
-        /// <returns></returns>
         public ContactListHubSpotModel<T> RecentlyUpdated<T>(ListRecentRequestOptions opts = null) where T : ContactHubSpotModel, new()
         {
             if (opts == null)
-            {
                 opts = new ListRecentRequestOptions();
-            }
 
             var path = $"{new ContactHubSpotModel().RouteBasePath}/lists/recently_updated/contacts/recent"
                 .SetQueryParam("count", opts.Limit);
 
             if (opts.PropertiesToInclude.Any())
-            {
                 path.SetQueryParam("property", opts.PropertiesToInclude);
-            }
 
             if (opts.Offset.HasValue)
-            {
                 path = path.SetQueryParam("vidOffset", opts.Offset);
-            }
 
             if (!string.IsNullOrEmpty(opts.TimeOffset))
-            {
                 path = path.SetQueryParam("timeOffset", opts.TimeOffset);
-            }
             
             path = path.SetQueryParam("propertyMode", opts.PropertyMode);
             
@@ -228,28 +219,36 @@
             return data;
         }
 
-        public ContactSearchHubSpotModel<T> Search<T>(ContactSearchRequestOptions opts = null) where T : ContactHubSpotModel, new()
+        public ContactSearchHubSpotModel<T> Search<T>(ContactSearchRequestOptions opts = null)
+            where T : ContactHubSpotModel, new()
         {
             if (opts == null)
-            {
                 opts = new ContactSearchRequestOptions();
-            }
 
             var path = $"{new T().RouteBasePath}/search/query"
                 .SetQueryParam("q", opts.Query)
                 .SetQueryParam("count", opts.Limit);
 
             if (opts.PropertiesToInclude.Any())
-            {
                 path.SetQueryParam("property", opts.PropertiesToInclude);
-            }
 
-            if (opts.Offset.HasValue)
-            {
+            if (opts.Offset != null)
                 path = path.SetQueryParam("offset", opts.Offset);
+
+            if (!string.IsNullOrWhiteSpace(opts.SortBy))
+            {
+                path = path.SetQueryParam("sort", opts.SortBy);
+
+				Type enumType = typeof(SortingOrderType);
+				MemberInfo[] memberInfos = enumType.GetMember(opts.Order.ToString());
+				MemberInfo enumValueMemberInfo = memberInfos.FirstOrDefault(m => m.DeclaringType == enumType);
+				object[] valueAttributes = enumValueMemberInfo.GetCustomAttributes(typeof(EnumMemberAttribute), false);
+				string description = ((EnumMemberAttribute)valueAttributes[0]).Value;
+
+                path = path.SetQueryParam("order", description);
             }
 
-            var data = _client.ExecuteList<ContactSearchHubSpotModel<T>>(path);
+            ContactSearchHubSpotModel<T> data = _client.ExecuteList<ContactSearchHubSpotModel<T>>(path);
 
             return data;
         }
@@ -257,33 +256,22 @@
         /// <summary>
         /// Get a list of recently created contacts
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="opts">Request options</param>
-        /// <returns></returns>
         public ContactListHubSpotModel<T> RecentlyCreated<T>(ListRecentRequestOptions opts = null) where T : ContactHubSpotModel, new()
         {
             if (opts == null)
-            {
                 opts = new ListRecentRequestOptions();
-            }
 
             var path = $"{new ContactHubSpotModel().RouteBasePath}/lists/all/contacts/recent"
                 .SetQueryParam("count", opts.Limit);
 
             if (opts.PropertiesToInclude.Any())
-            {
                 path.SetQueryParam("property", opts.PropertiesToInclude);
-            }
 
             if (opts.Offset.HasValue)
-            {
                 path = path.SetQueryParam("vidOffset", opts.Offset);
-            }
 
             if (!string.IsNullOrEmpty(opts.TimeOffset))
-            {
                 path = path.SetQueryParam("timeOffset", opts.TimeOffset);
-            }
             
             path = path.SetQueryParam("propertyMode", opts.PropertyMode);
             
