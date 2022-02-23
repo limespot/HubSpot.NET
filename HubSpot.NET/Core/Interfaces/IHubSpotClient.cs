@@ -6,8 +6,6 @@ namespace HubSpot.NET.Core.Interfaces
 {
     public interface IHubSpotClient
     {
-        string AppId { get; }
-
         T Execute<T>(string absoluteUriPath, object entity = null, Method method = Method.GET, bool convertToPropertiesSchema = true) where T : IHubSpotModel, new();
         
         T Execute<T>(string absoluteUriPath, Method method = Method.GET, bool convertToPropertiesSchema = true) where T : IHubSpotModel, new();

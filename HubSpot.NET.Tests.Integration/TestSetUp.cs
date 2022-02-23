@@ -39,7 +39,7 @@ namespace HubSpot.NET.Tests.Integration
 			if (!string.IsNullOrWhiteSpace(hapiKey))
 				Client = new HubSpotBaseClient(hapiKey);
 			else if (!string.IsNullOrWhiteSpace(privateAppAccessToken))
-				Client = new HubSpotBaseClient(string.Empty, new HubSpotToken { AccessToken = privateAppAccessToken });
+				Client = new HubSpotBaseClient(new HubSpotToken { AccessToken = privateAppAccessToken });
 			else
 				Assert.Fail("Create a settings file (local.settings.json for .NET Core, app.config for .NET) and add either a HubSpot API Key as 'ApiKey' or a Private App Access Token as 'PrivateAppAccessToken' to run tests.");
 		}

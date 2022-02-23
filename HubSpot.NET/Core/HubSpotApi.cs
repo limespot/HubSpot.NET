@@ -45,9 +45,9 @@ namespace HubSpot.NET.Core
             Initialise(client);
         }
 
-        public HubSpotApi(string appId, HubSpotToken token)
+        public HubSpotApi(HubSpotToken token)
         {
-            IHubSpotClient client = new HubSpotBaseClient(appId, token);
+            IHubSpotClient client = new HubSpotBaseClient(token);
 
             Initialise(client);
         }

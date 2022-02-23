@@ -22,7 +22,6 @@ namespace HubSpot.NET.Core
         protected readonly string _apiKey;
 
         // Used for OAUTH
-        public string AppId { get; private set; }
         private HubSpotToken _token;
 
         protected virtual void Initialise()
@@ -43,9 +42,8 @@ namespace HubSpot.NET.Core
         /// <summary>
         /// Creates a HubSpot client with the authentication scheme OAUTH.
         /// </summary>
-        public HubSpotBaseClient(string appId, HubSpotToken token)
+        public HubSpotBaseClient(HubSpotToken token)
         {
-            AppId = appId;
             _token = token;
             _mode = HubSpotAuthenticationMode.OAUTH;
             Initialise();
