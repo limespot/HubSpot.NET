@@ -66,4 +66,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>IF NOT EXIST "$(ProjectDir)app.config" ECHO ^&lt;^?xml version="1.0" encoding="utf-8"^?^&gt;^&lt;configuration^&gt;^&lt;^/configuration^&gt; &gt; "$(ProjectDir)app.config"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

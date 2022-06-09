@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Flurl;
 using HubSpot.NET.Api.ContactList.Dto;
+using HubSpot.NET.Core.Extensions;
 using HubSpot.NET.Core.Interfaces;
 using RestSharp;
 
