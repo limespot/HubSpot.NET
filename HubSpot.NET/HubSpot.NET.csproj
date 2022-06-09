@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net46;net451;netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>net452;net451;net452;netstandard2.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>1.0.0.1</Version>
+		<Version>1.0.0.2</Version>
 		<Authors>Chinchilla Software Limited</Authors>
 		<Company>Chinchilla Software Limited</Company>
 		<Description>C# .NET Wrapper around the common HubSpot APIs.</Description>
@@ -15,12 +15,19 @@
 		<RepositoryUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</RepositoryUrl>
 		<PackageTags>hubspot api wrapper c# contact company deal engagement properties crm</PackageTags>
 		<PackageReleaseNotes>
-			1.0.0.1 - Adds OAuth to 0.6.20.1
-			Minor breaking change, Offset properties on response objects standardised to ContinuationOffset
-			Added sorting to searching contacts
-			Added ability to include inactive owners when calling for all owners
-			Added ability to filter owners by email address when calling for all owners
-			Removed dependency on Flurl.
+			Version 1.0.0.2
+
+			* Upgraded RestSharp to 106.15.0 to address a security issue.
+			* Changed target framework from 4.6 to 4.5.2.
+
+			Version 1.0.0.1
+
+			* Adds OAuth to 0.6.20.1
+			* Minor breaking change, Offset properties on response objects standardised to ContinuationOffset
+			* Added sorting to searching contacts
+			* Added ability to include inactive owners when calling for all owners
+			* Added ability to filter owners by email address when calling for all owners
+			* Removed dependency on Flurl.
 		</PackageReleaseNotes>
 		<PackageId>Chinchilla.HubSpot.NET</PackageId>
 	</PropertyGroup>
@@ -56,8 +63,8 @@
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
 	</ItemGroup>
-	<ItemGroup Condition=" '$(TargetFramework)' == 'NET46' ">
-		<PackageReference Include="RestSharp" Version="106.10.1" />
+	<ItemGroup Condition=" '$(TargetFramework)' == 'NET452' ">
+		<PackageReference Include="RestSharp" Version="106.15.0" />
 		<Reference Include="Microsoft.CSharp" />
 		<Reference Include="System.Net.Http" />
 	</ItemGroup>
@@ -67,7 +74,7 @@
 		<Reference Include="System.Net.Http" />
 	</ItemGroup>
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-		<PackageReference Include="RestSharp" Version="106.10.1" />
+		<PackageReference Include="RestSharp" Version="106.15.0" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 	</ItemGroup>
 	<ItemGroup>
