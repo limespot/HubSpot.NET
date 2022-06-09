@@ -1,6 +1,7 @@
 namespace HubSpot.NET.Api.Owner
 {
     using HubSpot.NET.Api.Owner.Dto;
+    using HubSpot.NET.Core.Extensions;
     using HubSpot.NET.Core.Interfaces;
 
     public class HubSpotOwnerApi : IHubSpotOwnerApi
@@ -16,9 +17,18 @@ namespace HubSpot.NET.Api.Owner
         /// Gets all owners within your HubSpot account
         /// </summary>
         /// <returns>The set of owners</returns>
-        public OwnerListHubSpotModel<T> GetAll<T>() where T: OwnerHubSpotModel, new()
+        public OwnerListHubSpotModel<T> GetAll<T>(OwnerGetAllRequestOptions opts = null)
+            where T: OwnerHubSpotModel, new()
         {
-            var path = $"{new OwnerHubSpotModel().RouteBasePath}/owners";
+            string path = $"{new OwnerHubSpotModel().RouteBasePath}/owners";
+
+            if (opts != null)
+            {
+                if (opts.IncludeInactive)
+                    path = path.SetQueryParam("includeInactive", "true");
+                if (!string.IsNullOrWhiteSpace(opts.EmailAddress))
+                    path = path.SetQueryParam("email", opts.EmailAddress);
+            }
 
             return _client.ExecuteList<OwnerListHubSpotModel<T>>(path, convertToPropertiesSchema: false);
         }

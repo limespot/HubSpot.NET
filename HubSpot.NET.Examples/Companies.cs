@@ -37,6 +37,8 @@ namespace HubSpot.NET.Examples
             /**
              * Search for a company
              */
+            string searchValue = company.Name;
+            SearchRequestFilterOperatorType searchOperator = SearchRequestFilterOperatorType.EqualTo;
             var searchedCompany = api.Company.Search<CompanyHubSpotModel>(new SearchRequestOptions()
             {
                 FilterGroups = new List<SearchRequestFilterGroup>
@@ -48,7 +50,8 @@ namespace HubSpot.NET.Examples
                             new SearchRequestFilter
                             {
                                 PropertyName = "name",
-                                Value = company.Name
+                                Operator = searchOperator,
+                                Value = searchValue
                             }
                         }
                     }
@@ -77,6 +80,56 @@ namespace HubSpot.NET.Examples
              * Delete a contact
              */
             api.Company.Delete(company.Id.Value);
+
+            /*
+             * Create several companies and test searching
+             */
+            IList<CompanyHubSpotModel> sampleCompanies = new List<CompanyHubSpotModel>();
+            for (int i = 1; i <= 22; i++)
+            {
+                company = api.Company.Create(new CompanyHubSpotModel()
+                {
+                    Domain = "squaredup.com",
+                    Name = $"Squared Up {i:N0}"
+                });
+                sampleCompanies.Add(company);
+            }
+            searchValue = "Squared Up";
+            searchOperator = SearchRequestFilterOperatorType.ContainsAToken;
+            var searchedCompanies = api.Company.Search<CompanyHubSpotModel>(new SearchRequestOptions()
+            {
+                FilterGroups = new List<SearchRequestFilterGroup>
+                {
+                    new SearchRequestFilterGroup
+                    {
+                        Filters = new List<SearchRequestFilter>
+                        {
+                            new SearchRequestFilter
+                            {
+                                PropertyName = "name",
+                                Operator = searchOperator,
+                                Value = searchValue
+                            }
+                        }
+                    }
+                },
+                PropertiesToInclude = new List<string>
+                {
+                    "domain", "name", "website"
+                }
+            });
+            if (searchedCompanies.Total < 1)
+                throw new InvalidOperationException("No companies found.");
+            if (searchedCompanies.Total != 22)
+                throw new InvalidOperationException($"'{searchedCompanies.Total:N0}' companies found when we expected 22.");
+            if (searchedCompanies.Paging == null || searchedCompanies.Paging.Next == null || string.IsNullOrWhiteSpace(searchedCompanies.Paging.Next.After))
+                throw new InvalidOperationException("Paging did not deserlise correctly.");
+            if (searchedCompanies.Paging.Next.After != "20")
+                throw new InvalidOperationException($"'{searchedCompanies.Paging.Next.After}' as a value for Paging.Next.After was not the expted 20.");
+            for (int i = 0; i < sampleCompanies.Count; i++)
+            {
+                api.Company.Delete(sampleCompanies[i].Id.Value);
+            }
         }
     }
 }

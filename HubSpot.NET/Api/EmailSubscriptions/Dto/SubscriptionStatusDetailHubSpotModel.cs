@@ -12,5 +12,14 @@ namespace HubSpot.NET.Api.EmailSubscriptions.Dto
 
         [DataMember(Name = "updatedAt")]
         public string UpdatedAt { get;set; }
+        
+        [DataMember(Name = "optState")]
+        public string OptState { get; set; }
+        
+        [DataMember(Name = "legalBasis")]
+        public string LegalBasis { get; set; }
+
+        [DataMember(Name = "legalBasisExplanation")]
+        public string LegalBasisExplanation { get; set; }
     }
 }

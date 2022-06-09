@@ -27,5 +27,18 @@ namespace HubSpot.NET.Api.Properties
             return _client.Execute<CompanyPropertyHubSpotModel>(path, property, Method.POST, convertToPropertiesSchema: false);
         }
 
+        public CompanyPropertyHubSpotModel Update(CompanyPropertyHubSpotModel property)
+        {
+            var path = $"{new PropertiesListHubSpotModel<CompanyPropertyHubSpotModel>().RouteBasePath}/named/{property.Name}";
+
+            return _client.Execute<CompanyPropertyHubSpotModel>(path, property, Method.PUT, convertToPropertiesSchema: false);
+        }
+
+        public void Delete(string propertyName)
+        {
+            var path = $"{new PropertiesListHubSpotModel<CompanyPropertyHubSpotModel>().RouteBasePath}/named/{propertyName}";
+
+            _client.Execute(path, method: Method.DELETE);
+        }
     }
 }

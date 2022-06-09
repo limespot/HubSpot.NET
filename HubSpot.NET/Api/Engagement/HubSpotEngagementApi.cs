@@ -2,10 +2,10 @@
 {
     using System;
     using System.Net;
-    using Flurl;
     using HubSpot.NET.Api.Engagement.Dto;
-	using HubSpot.NET.Core;
-	using HubSpot.NET.Core.Interfaces;
+    using HubSpot.NET.Core;
+    using HubSpot.NET.Core.Extensions;
+    using HubSpot.NET.Core.Interfaces;
     using RestSharp;
 
     public class HubSpotEngagementApi : IHubSpotEngagementApi

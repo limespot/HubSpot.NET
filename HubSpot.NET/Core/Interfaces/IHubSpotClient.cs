@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using HubSpot.NET.Core.OAuth.Dto;
 using RestSharp;
 
 namespace HubSpot.NET.Core.Interfaces
@@ -16,5 +17,7 @@ namespace HubSpot.NET.Core.Interfaces
         T ExecuteMultipart<T>(string absoluteUriPath, byte[] data, string filename, Dictionary<string,string> parameters, Method method = Method.POST) where T : new();
 
         T ExecuteList<T>(string absoluteUriPath, object entity = null, Method method = Method.GET, bool convertToPropertiesSchema = true) where T : IHubSpotModel, new();
+
+        void UpdateToken(HubSpotToken token);
     }
 }

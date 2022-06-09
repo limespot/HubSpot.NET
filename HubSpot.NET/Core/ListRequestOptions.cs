@@ -26,10 +26,7 @@ namespace HubSpot.NET.Core
             set
             {
                 if (value < 1 || value > _upperLimit)
-                {
-                    throw new ArgumentException(
-                        $"Number of items to return must be a positive integer greater than 0, and less than {_upperLimit} - you provided {value}");
-                }
+                    throw new ArgumentException($"Number of items to return must be a positive integer greater than 0, and less than {_upperLimit} - you provided {value}");
                 _limit = value;
             }
         }
@@ -41,6 +38,8 @@ namespace HubSpot.NET.Core
         public ListRequestOptions(int upperLimit)
         {
             _upperLimit = upperLimit;
+            if (_limit > upperLimit)
+                _limit = upperLimit;
         }
 
         /// <summary>

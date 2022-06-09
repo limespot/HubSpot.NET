@@ -30,7 +30,14 @@ namespace HubSpot.NET.Core.Interfaces
         /// <summary>
         /// Subscribe the given email address to the given subscription type
         /// See <see cref="https://legacydocs.hubspot.com/docs/methods/email/update_status"/>
-        /// </summary>
-        void SubscribeTo(string email, long id, string basis, string basisExplaination);
+        /// </summary>        /// <param name="email">The email</param>
+        /// <param name="id">The id</param>
+        /// <param name="basis">The basis</param>
+        /// <param name="basisExplanation">The basis explanation</param>
+        /// <param name="setPortalSubscriptionBasis">The set portal subscription basis</param>
+        /// <param name="setSubscriptionBasis">The set subscription basis</param>
+        /// <param name="subscriptionBasis">The subscription basis</param>
+        /// <param name="subscriptionBasisExplanation">The subscription basis explanation</param>
+        void SubscribeTo(string email, long id, string basis, string basisExplanation, bool setPortalSubscriptionBasis = true, bool setSubscriptionBasis = false, string subscriptionBasis = null, string subscriptionBasisExplanation = null);
     }
 }

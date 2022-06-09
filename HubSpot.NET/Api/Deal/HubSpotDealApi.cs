@@ -1,12 +1,12 @@
 ﻿namespace HubSpot.NET.Api.Deal
 {
     using System;
-	using System.Collections.Generic;
-	using System.Linq;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
-    using Flurl;
     using HubSpot.NET.Api.Deal.Dto;
     using HubSpot.NET.Core;
+    using HubSpot.NET.Core.Extensions;
     using HubSpot.NET.Core.Interfaces;
     using RestSharp;
 
@@ -64,9 +64,7 @@
         public T Update<T>(T entity) where T : DealHubSpotModel, new()
         {
             if (entity.Id < 1)
-            {
                 throw new ArgumentException("Deal entity must have an id set!");
-            }
 
             var path = $"{entity.RouteBasePath}/deal/{entity.Id}";
 
@@ -83,27 +81,19 @@
         public DealListHubSpotModel<T> List<T>(bool includeAssociations, ListRequestOptions opts = null) where T : DealHubSpotModel, new()
         {
             if (opts == null)
-            {
                 opts = new ListRequestOptions(250);
-            }
 
             var path = $"{new DealListHubSpotModel<T>().RouteBasePath}/deal/paged"
                 .SetQueryParam("limit", opts.Limit);
 
             if (opts.Offset.HasValue)
-            {
                 path = path.SetQueryParam("offset", opts.Offset);
-            }
 
             if (includeAssociations)
-            {
                 path = path.SetQueryParam("includeAssociations", "true");
-            }
 
             if (opts.PropertiesToInclude.Any())
-            {
                 path = path.SetQueryParam("properties", opts.PropertiesToInclude);
-            }
 
             var data = _client.ExecuteList<DealListHubSpotModel<T>>(path);
 
@@ -123,27 +113,19 @@
         public DealListHubSpotModel<T> ListAssociated<T>(bool includeAssociations, long hubId, ListRequestOptions opts = null, string objectName = "contact") where T : DealHubSpotModel, new()
         {
             if (opts == null)
-            {
                 opts = new ListRequestOptions();
-            }
 
             var path = $"{new DealListHubSpotModel<T>().RouteBasePath}/deal/associated/{objectName}/{hubId}/paged"
                 .SetQueryParam("limit", opts.Limit);
 
             if (opts.Offset.HasValue)
-            {
                 path = path.SetQueryParam("offset", opts.Offset);
-            }
 
             if (includeAssociations)
-            {
                 path = path.SetQueryParam("includeAssociations", "true");
-            }
 
             if (opts.PropertiesToInclude.Any())
-            {
                 path = path.SetQueryParam("properties", opts.PropertiesToInclude);
-            }
 
             var data = _client.ExecuteList<DealListHubSpotModel<T>>(path, opts);
 
@@ -171,27 +153,19 @@
         {
 
             if (opts == null)
-            {
                 opts = new DealRecentRequestOptions();
-            }
 
             var path = $"{new DealRecentListHubSpotModel<T>().RouteBasePath}/deal/recent/created"
-                .SetQueryParam("limit", opts.Limit);
+                .SetQueryParam("count", opts.Limit);
 
             if (opts.Offset.HasValue)
-            {
                 path = path.SetQueryParam("offset", opts.Offset);
-            }
 
             if (opts.IncludePropertyVersion)
-            {
                 path = path.SetQueryParam("includePropertyVersions", "true");
-            }
 
             if (!string.IsNullOrEmpty(opts.Since))
-            {
                 path = path.SetQueryParam("since", opts.Since);
-            }
 
             var data = _client.ExecuteList<DealRecentListHubSpotModel<T>>(path);
 
@@ -207,27 +181,19 @@
         public DealRecentListHubSpotModel<T> RecentlyUpdated<T>(DealRecentRequestOptions opts = null) where T : DealHubSpotModel, new()
         {
             if (opts == null)
-            {
                 opts = new DealRecentRequestOptions();
-            }
 
             var path = $"{new DealRecentListHubSpotModel<T>().RouteBasePath}/deal/recent/modified"
-                .SetQueryParam("limit", opts.Limit);
+                .SetQueryParam("count", opts.Limit);
 
             if (opts.Offset.HasValue)
-            {
                 path = path.SetQueryParam("offset", opts.Offset);
-            }
 
             if (opts.IncludePropertyVersion)
-            {
                 path = path.SetQueryParam("includePropertyVersions", "true");
-            }
 
             if (!string.IsNullOrEmpty(opts.Since))
-            {
                 path = path.SetQueryParam("since", opts.Since);
-            }
 
             var data = _client.ExecuteList<DealRecentListHubSpotModel<T>>(path);
 
@@ -243,9 +209,7 @@
         public SearchHubSpotModel<T> Search<T>(SearchRequestOptions opts = null) where T : DealHubSpotModel, new()
         {
             if (opts == null)
-            {
                 opts = new SearchRequestOptions();
-            }
 
             var path = "/crm/v3/objects/deals/search";
 
@@ -344,5 +308,5 @@
 
             return entity;
         }
-	}
+    }
 }

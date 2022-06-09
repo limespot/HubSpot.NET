@@ -260,3 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 /HubSpot.NET.Examples/App.config
+/HubSpot.NET.Tests.Integration/App.config
+/HubSpot.NET.Tests.Integration/local.settings.json

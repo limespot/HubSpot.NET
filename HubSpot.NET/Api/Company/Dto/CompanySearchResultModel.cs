@@ -17,7 +17,7 @@ namespace HubSpot.NET.Api.Company.Dto
         public bool MoreResultsAvailable { get; set; }
 
         [DataMember(Name="offset")]
-        public CompanySearchOffset Offset { get; set; }
+        public CompanySearchOffset ContinuationOffset { get; set; }
 
         public bool IsNameValue => false;
 

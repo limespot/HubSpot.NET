@@ -8,6 +8,7 @@ using HubSpot.NET.Api.Files;
 using HubSpot.NET.Api.Owner;
 using HubSpot.NET.Api.Properties;
 using HubSpot.NET.Core.Interfaces;
+using HubSpot.NET.Core.OAuth.Dto;
 
 namespace HubSpot.NET.Core
 {
@@ -16,21 +17,19 @@ namespace HubSpot.NET.Core
     /// </summary>
     public class HubSpotApi : IHubSpotApi
     {
-        public IHubSpotCompanyApi Company { get; }
-        public IHubSpotContactApi Contact { get; }
-        public IHubSpotDealApi Deal { get; }
-        public IHubSpotEngagementApi Engagement { get; }
-        public IHubSpotCosFileApi File { get; }
-        public IHubSpotOwnerApi Owner { get; }
-        public IHubSpotCompanyPropertiesApi CompanyProperties { get; }
-        public IHubSpotContactListApi ContactLists { get; }
+        public IHubSpotCompanyApi Company { get; protected set; }
+        public IHubSpotContactApi Contact { get; protected set; }
+        public IHubSpotDealApi Deal { get; protected set; }
+        public IHubSpotEngagementApi Engagement { get; protected set; }
+        public IHubSpotCosFileApi File { get; protected set; }
+        public IHubSpotOwnerApi Owner { get; protected set; }
+        public IHubSpotCompanyPropertiesApi CompanyProperties { get; protected set; }
+        public IHubSpotContactListApi ContactLists { get; protected set; }
 
-        public IHubSpotEmailSubscriptionsApi EmailSubscriptions { get; }
+        public IHubSpotEmailSubscriptionsApi EmailSubscriptions { get; protected set; }
 
-        public HubSpotApi(string apiKey)
-        {
-            IHubSpotClient client = new HubSpotBaseClient(apiKey);
-
+        protected virtual void Initialise(IHubSpotClient client)
+		{
             Company = new HubSpotCompanyApi(client);
             Contact = new HubSpotContactApi(client);
             Deal = new HubSpotDealApi(client);
@@ -42,6 +41,18 @@ namespace HubSpot.NET.Core
             ContactLists = new HubSpotContactListApi(client);
         }
 
-    }
+        public HubSpotApi(string apiKey)
+        {
+            IHubSpotClient client = new HubSpotBaseClient(apiKey);
 
+            Initialise(client);
+        }
+
+        public HubSpotApi(HubSpotToken token)
+        {
+            IHubSpotClient client = new HubSpotBaseClient(token);
+
+            Initialise(client);
+        }
+    }
 }

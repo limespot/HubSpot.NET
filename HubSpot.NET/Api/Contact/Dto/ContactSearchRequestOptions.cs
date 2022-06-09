@@ -12,5 +12,19 @@ namespace HubSpot.NET.Api.Contact.Dto
         /// </summary>
         public string Query { get; set; }
 
+        /// <summary>
+        /// Gets or set the internal property name (e.g. vid) and sort contact search results by that field.
+        /// </summary>
+        public string SortBy { get; set; }
+
+        /// <summary>
+        /// (defaults to "DESC") The order results are ordered by with respect to <see cref="SortBy"/>.
+        /// </summary>
+        public SortingOrderType Order { get; set; }
+
+        public ContactSearchRequestOptions()
+		{
+            Order = SortingOrderType.Descending;
+        }
     }
 }

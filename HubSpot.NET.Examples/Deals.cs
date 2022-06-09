@@ -42,7 +42,7 @@ namespace HubSpot.NET.Examples
                         {
                             new SearchRequestFilter
                             {
-                                Operator = "EQ",
+                                Operator = SearchRequestFilterOperatorType.EqualTo,
                                 PropertyName = "dealname",
                                 Value = deal.Name
                             }
