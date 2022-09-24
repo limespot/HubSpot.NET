@@ -51,37 +51,53 @@ namespace HubSpot.NET.Core
 
         public T Execute<T>(string absoluteUriPath, object entity = null, Method method = Method.GET, bool convertToPropertiesSchema = true) where T : IHubSpotModel, new()
         {
+            return Execute<T>(absoluteUriPath, entity, method, convertToPropertiesSchema ? SerialisationType.PropertiesSchema : SerialisationType.Raw);
+        }
+        public T Execute<T>(string absoluteUriPath, object entity = null, Method method = Method.GET, SerialisationType serialisationType = SerialisationType.PropertyBag) where T : IHubSpotModel, new()
+        {
             string json = (method == Method.GET || entity == null)
                 ? null
-                : _serializer.SerializeEntity(entity, convertToPropertiesSchema);
+                : _serializer.SerializeEntity(entity, serialisationType);
 
-            T data = SendRequest(absoluteUriPath, method, json, responseData => (T)_serializer.DeserializeEntity<T>(responseData, convertToPropertiesSchema));
+            T data = SendRequest(absoluteUriPath, method, json, responseData => (T)_serializer.DeserializeEntity<T>(responseData, serialisationType != SerialisationType.Raw));
 
             return data;
         }
 
         public T Execute<T>(string absoluteUriPath, Method method = Method.GET, bool convertToPropertiesSchema = true) where T : IHubSpotModel, new()
         {
-            T data = SendRequest(absoluteUriPath, method, null, responseData => (T)_serializer.DeserializeEntity<T>(responseData, convertToPropertiesSchema));
+            return Execute<T>(absoluteUriPath, method, convertToPropertiesSchema ? SerialisationType.PropertiesSchema : SerialisationType.Raw);
+
+        }
+        public T Execute<T>(string absoluteUriPath, Method method = Method.GET, SerialisationType serialisationType = SerialisationType.PropertyBag) where T : IHubSpotModel, new()
+        {
+            T data = SendRequest(absoluteUriPath, method, null, responseData => (T)_serializer.DeserializeEntity<T>(responseData, serialisationType != SerialisationType.Raw));
 
             return data;
         }
 
         public void Execute(string absoluteUriPath, object entity = null, Method method = Method.GET, bool convertToPropertiesSchema = true)
         {
+            Execute(absoluteUriPath, entity, method, convertToPropertiesSchema ? SerialisationType.PropertiesSchema : SerialisationType.Raw);
+        }
+        public void Execute(string absoluteUriPath, object entity = null, Method method = Method.GET, SerialisationType serialisationType = SerialisationType.PropertyBag)
+        {
             string json = (method == Method.GET || entity == null)
                 ? null
-                : _serializer.SerializeEntity(entity, convertToPropertiesSchema);
-            
+                : _serializer.SerializeEntity(entity, serialisationType);
+
             SendRequest(absoluteUriPath, method, json);
         }
 
-        public void ExecuteBatch(string absoluteUriPath, List<object> entities, Method method = Method.GET,
-            bool convertToPropertiesSchema = true)
+        public void ExecuteBatch(string absoluteUriPath, List<object> entities, Method method = Method.GET, bool convertToPropertiesSchema = true)
+        {
+            ExecuteBatch(absoluteUriPath, entities, method, convertToPropertiesSchema ? SerialisationType.PropertiesSchema : SerialisationType.Raw);
+        }
+        public void ExecuteBatch(string absoluteUriPath, List<object> entities, Method method = Method.GET, SerialisationType serialisationType = SerialisationType.PropertyBag)
         {
             string json = (method == Method.GET || entities == null)
                 ? null
-                : _serializer.SerializeEntity(entities, convertToPropertiesSchema);
+                : _serializer.SerializeEntity(entities, serialisationType);
 
             SendRequest(absoluteUriPath, method, json);
         }
@@ -108,15 +124,19 @@ namespace HubSpot.NET.Core
 
         public T ExecuteList<T>(string absoluteUriPath, object entity = null, Method method = Method.GET, bool convertToPropertiesSchema = true) where T : IHubSpotModel, new()
         {
+            return ExecuteList<T>(absoluteUriPath, entity, method, convertToPropertiesSchema ? SerialisationType.PropertiesSchema : SerialisationType.Raw);
+        }
+        public T ExecuteList<T>(string absoluteUriPath, object entity = null, Method method = Method.GET, SerialisationType serialisationType = SerialisationType.PropertyBag) where T : IHubSpotModel, new()
+        {
             string json = (method == Method.GET || entity == null)
                 ? null
-                : _serializer.SerializeEntity(entity);
+                : _serializer.SerializeEntity(entity, true);
 
             var data = SendRequest(
                 absoluteUriPath,
                 method,
                 json,
-                responseData => (T)_serializer.DeserializeListEntity<T>(responseData, convertToPropertiesSchema));
+                responseData => (T)_serializer.DeserializeListEntity<T>(responseData, serialisationType != SerialisationType.Raw));
             return data;
         }
 

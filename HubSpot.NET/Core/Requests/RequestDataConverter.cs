@@ -240,6 +240,23 @@ namespace HubSpot.NET.Core.Requests
                 companyIdProp?.SetValue(dto, companyIdValue);
             }
 
+            // The taskId is the "id" of the task entity
+            if (expandoDict.TryGetValue("taskId", out var taskIdData))
+            {
+                // TODO use properly serialized name of prop to find it
+                var taskIdProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "taskId");
+                taskIdProp?.SetValue(dto, taskIdData);
+            }
+            else if (dto is Api.Task.Dto.TaskHubSpotModel && expandoDict.TryGetValue("id", out taskIdData))
+            {
+                // TODO use properly serialized name of prop to find it
+                var taskIdProp = dtoProps.SingleOrDefault(q => q.GetPropSerializedName() == "taskId");
+                long? taskIdValue = null;
+                if (taskIdData is string && taskIdData != null)
+                    taskIdValue = Convert.ToInt64(taskIdData);
+                taskIdProp?.SetValue(dto, taskIdValue);
+            }
+
             // DateCreated
             if (expandoDict.TryGetValue("createdAt", out var createdAtData))
             {

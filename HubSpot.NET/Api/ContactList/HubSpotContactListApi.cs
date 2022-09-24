@@ -125,7 +125,7 @@ namespace HubSpot.NET.Api.ContactList
         public void DeleteContactList(long listId)
         {
             var path = $"{new ContactListModel().RouteBasePath}/{listId}";
-            _client.Execute(path, method: Method.DELETE);
+            _client.Execute(path, method: Method.DELETE, convertToPropertiesSchema: true);
         }
 
         /// <summary>

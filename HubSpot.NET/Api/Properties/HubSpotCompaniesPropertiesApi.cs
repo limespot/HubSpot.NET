@@ -38,7 +38,7 @@ namespace HubSpot.NET.Api.Properties
         {
             var path = $"{new PropertiesListHubSpotModel<CompanyPropertyHubSpotModel>().RouteBasePath}/named/{propertyName}";
 
-            _client.Execute(path, method: Method.DELETE);
+            _client.Execute(path, method: Method.DELETE, convertToPropertiesSchema: true);
         }
     }
 }

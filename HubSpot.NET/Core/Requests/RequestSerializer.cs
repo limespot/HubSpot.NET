@@ -46,7 +46,18 @@ namespace HubSpot.NET.Core.Requests
         /// <returns>The serialized entity</returns>
         public virtual string SerializeEntity(object obj, bool convertToPropertiesSchema = true)
         {
-            if (obj is IHubSpotModel entity && convertToPropertiesSchema)
+            return SerializeEntity(obj, convertToPropertiesSchema ? SerialisationType.PropertiesSchema : SerialisationType.Raw);
+        }
+
+        /// <summary>
+        /// Serializes the entity to JSON.
+        /// </summary>
+        /// <param name="obj">The entity.</param>
+        /// <param name="convertToPropertiesSchema"></param>
+        /// <returns>The serialized entity</returns>
+        public virtual string SerializeEntity(object obj, SerialisationType serialisationType = SerialisationType.PropertyBag)
+        {
+            if (obj is IHubSpotModel entity && serialisationType == SerialisationType.PropertiesSchema)
             {
                 var converted = _requestDataConverter.ToHubspotDataEntity(entity);
 
@@ -57,8 +68,18 @@ namespace HubSpot.NET.Core.Requests
                     _jsonSerializerSettings);
             }
 
+            dynamic _obj = obj;
+            if (serialisationType == SerialisationType.PropertyBag)
+            {
+                _obj = new { properties = obj };
+                if (obj is Api.Task.Dto.TaskHubSpotModel)
+                {
+                    _obj.properties.Id = null;
+                }
+            }
+
             return JsonConvert.SerializeObject(
-                obj,
+                 _obj,
                 _jsonSerializerSettings);
         }
 

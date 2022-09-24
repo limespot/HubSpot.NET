@@ -31,7 +31,7 @@
         public T Create<T>(T entity) where T : ContactHubSpotModel, new()
         {
             var path = $"{entity.RouteBasePath}/contact";
-            return _client.Execute<T>(path, entity, Method.POST);
+            return _client.Execute<T>(path, entity, Method.POST, convertToPropertiesSchema: true);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@
         public T CreateOrUpdate<T>(T entity) where T : ContactHubSpotModel, new()
         {
             var path = $"{entity.RouteBasePath}/contact/createOrUpdate/email/{entity.Email}/";
-            return _client.Execute<T>(path, entity, Method.POST);
+            return _client.Execute<T>(path, entity, Method.POST, convertToPropertiesSchema: true);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@
 
             try
             {
-                T data = _client.Execute<T>(path, Method.GET);
+                T data = _client.Execute<T>(path, Method.GET, convertToPropertiesSchema: true);
                 return data;
              }
             catch (HubSpotException exception)
@@ -81,7 +81,7 @@
 
             try
             {
-                T data = _client.Execute<T>(path, Method.GET);
+                T data = _client.Execute<T>(path, Method.GET, convertToPropertiesSchema: true);
                 return data;
              }
             catch (HubSpotException exception)
@@ -104,7 +104,7 @@
 
             try
             {
-                T data = _client.Execute<T>(path, Method.GET);
+                T data = _client.Execute<T>(path, Method.GET, convertToPropertiesSchema: true);
                 return data;
             }
             catch (HubSpotException exception)
@@ -136,7 +136,7 @@
             if (opts.Offset.HasValue)
                 path = path.SetQueryParam("vidOffset", opts.Offset);
 
-			ContactListHubSpotModel<T> data = _client.ExecuteList<ContactListHubSpotModel<T>>(path);
+			ContactListHubSpotModel<T> data = _client.ExecuteList<ContactListHubSpotModel<T>>(path, convertToPropertiesSchema: true);
 
             return data;
         }
@@ -153,7 +153,7 @@
 
             var path = $"{contact.RouteBasePath}/contact/vid/{contact.Id}/profile";
 
-            _client.Execute(path, contact, Method.POST);
+            _client.Execute(path, contact, Method.POST, convertToPropertiesSchema: true);
         }
         
         /// <summary>
@@ -164,7 +164,7 @@
         {
             var path = $"{new ContactHubSpotModel().RouteBasePath}/contact/vid/{contactId}";
 
-            _client.Execute(path, method: Method.DELETE);
+            _client.Execute(path, method: Method.DELETE, convertToPropertiesSchema: true);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@
         {
             var path =  $"{new T().RouteBasePath}/contact/batch";
 
-            _client.ExecuteBatch(path, contacts.Select(c => (object) c).ToList(), Method.POST);
+            _client.ExecuteBatch(path, contacts.Select(c => (object) c).ToList(), Method.POST, convertToPropertiesSchema: true);
         }
 
         /// <summary>
@@ -206,7 +206,7 @@
             
             path = path.SetQueryParam("showListMemberships", opts.ShowListMemberships);
 
-			ContactListHubSpotModel<T> data = _client.ExecuteList<ContactListHubSpotModel<T>>(path, opts);
+			ContactListHubSpotModel<T> data = _client.ExecuteList<ContactListHubSpotModel<T>>(path, opts, convertToPropertiesSchema: true);
 
             return data;
         }
@@ -240,7 +240,7 @@
                 path = path.SetQueryParam("order", description);
             }
 
-            ContactSearchHubSpotModel<T> data = _client.ExecuteList<ContactSearchHubSpotModel<T>>(path);
+            ContactSearchHubSpotModel<T> data = _client.ExecuteList<ContactSearchHubSpotModel<T>>(path, convertToPropertiesSchema: true);
 
             return data;
         }
@@ -271,7 +271,7 @@
             
             path = path.SetQueryParam("showListMemberships", opts.ShowListMemberships);
 
-			ContactListHubSpotModel<T> data = _client.ExecuteList<ContactListHubSpotModel<T>>(path, opts);
+			ContactListHubSpotModel<T> data = _client.ExecuteList<ContactListHubSpotModel<T>>(path, opts, convertToPropertiesSchema: true);
 
             return data;
         }

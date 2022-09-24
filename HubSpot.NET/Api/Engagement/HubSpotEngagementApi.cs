@@ -120,7 +120,7 @@
         {
             var path = $"{new EngagementHubSpotModel().RouteBasePath}/engagements/{engagementId}";
 
-            _client.Execute(path, method: Method.DELETE);
+            _client.Execute(path, method: Method.DELETE, convertToPropertiesSchema: true);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@
         {
             var path = $"{new EngagementHubSpotModel().RouteBasePath}/engagements/{engagementId}/associations/{objectType}/{objectId}";
 
-            _client.Execute(path, method: Method.PUT);
+            _client.Execute(path, method: Method.PUT, convertToPropertiesSchema: true);
         }
 
         /// <summary>

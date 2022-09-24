@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net452;net451;netstandard2.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>1.1.1</Version>
+		<Version>1.2</Version>
 		<Authors>Chinchilla Software Limited</Authors>
 		<Company>Chinchilla Software Limited</Company>
 		<Description>C# .NET Wrapper around the common HubSpot APIs.</Description>
@@ -15,6 +15,10 @@
 		<RepositoryUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</RepositoryUrl>
 		<PackageTags>hubspot api wrapper c# contact company deal engagement properties crm</PackageTags>
 		<PackageReleaseNotes>
+			Version 1.2.0
+
+			* Implement basic task list API operations - as per requested by https://github.com/Chinchilla-Software-Com/HubSpot.NET/issues/13
+
 			Version 1.1.0
 
 			* Implement basic contact list API operations - community contribution thanks to https://github.com/lakesol
