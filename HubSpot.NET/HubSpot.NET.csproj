@@ -1,20 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net452;net451;netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>1.2</Version>
-		<Authors>Chinchilla Software Limited</Authors>
-		<Company>Chinchilla Software Limited</Company>
+		<Version>1.3</Version>
+		<Authors>LimeSpot Solutions Inc.</Authors>
+		<Company>LimeSpot Solutions Inc.</Company>
 		<Description>C# .NET Wrapper around the common HubSpot APIs.</Description>
-		<Copyright>2021 Chinchilla Software Limited.</Copyright>
+		<Copyright>2022 LimeSpot Solutions Inc.</Copyright>
 		<!--
-		<PackageLicenseUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET/blob/master/LICENSE</PackageLicenseUrl>
+		<PackageLicenseUrl>https://github.com/limespot/HubSpot.NET/blob/master/LICENSE</PackageLicenseUrl>
 		-->
-		<PackageProjectUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/Chinchilla-Software-Com/HubSpot.NET</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/limespot/HubSpot.NET</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/limespot/HubSpot.NET</RepositoryUrl>
 		<PackageTags>hubspot api wrapper c# contact company deal engagement properties crm</PackageTags>
 		<PackageReleaseNotes>
+			Version 1.3.0
+			
+			* Upgrade to Net Core 6.0
+			
 			Version 1.2.0
 
 			* Implement basic task list API operations - as per requested by https://github.com/Chinchilla-Software-Com/HubSpot.NET/issues/13
@@ -37,7 +41,7 @@
 			* Added ability to filter owners by email address when calling for all owners
 			* Removed dependency on Flurl.
 		</PackageReleaseNotes>
-		<PackageId>Chinchilla.HubSpot.NET</PackageId>
+		<PackageId>LimeSpot.HubSpot.NET</PackageId>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -58,10 +62,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<LangVersion>7.1</LangVersion>
+		<LangVersion>9</LangVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<LangVersion>7.1</LangVersion>
+		<LangVersion>9</LangVersion>
 	</PropertyGroup>
 	<ItemGroup>
 	  <Compile Remove="Api\Company\Dto\CompanySearchRequestOptions.cs" />
@@ -71,17 +75,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-	</ItemGroup>
-	<ItemGroup Condition=" '$(TargetFramework)' == 'NET452' ">
-		<PackageReference Include="RestSharp" Version="106.15.0" />
-		<Reference Include="System.Net.Http" />
-	</ItemGroup>
-	<ItemGroup Condition=" '$(TargetFramework)' == 'NET451' ">
-		<PackageReference Include="RestSharp" Version="105.2.3" />
-		<Reference Include="System.Net.Http" />
-	</ItemGroup>
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-		<PackageReference Include="RestSharp" Version="106.15.0" />
+		<PackageReference Include="RestSharp" Version="106.6.9" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 	</ItemGroup>
 	<ItemGroup>
